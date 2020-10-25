@@ -24,7 +24,7 @@ class RecordingApp(VoiceApp):
     def __init__(self, *args, **kwargs):
         self.__dict__.update(kwargs)
         if not self.announceFile:
-            raise ValueError, "must supply announceFile"
+            raise ValueError("must supply announceFile")
         super(RecordingApp, self).__init__(*args, **kwargs)
 
     def __start__(self):

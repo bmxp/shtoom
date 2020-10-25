@@ -130,7 +130,7 @@ class Address:
         elif len(addr) == 3:
             self._display, self._uri, self._params = addr
         else:
-            raise ValueError, "Address() takes either an address or a 3-tuple"
+            raise ValueError("Address() takes either an address or a 3-tuple")
         if ensureTag and not self._params.has_key('tag'):
             self._params['tag'] = self.genTag()
 
@@ -190,7 +190,7 @@ class Dialog:
         elif outbound:
             self._direction = 'outbound'
         else:
-            raise ValueError, "must be either inbound or outbound"
+            raise ValueError("must be either inbound or outbound")
 
     def getDirection(self):
         return self._direction
@@ -201,7 +201,7 @@ class Dialog:
         elif self._direction == 'outbound':
             return self.getCaller()
         else:
-            raise ValueError, "direction be either inbound or outbound"
+            raise ValueError("direction be either inbound or outbound")
 
     def getRemoteTag(self):
         if self._direction == 'inbound':
@@ -209,7 +209,7 @@ class Dialog:
         elif self._direction == 'outbound':
             return self.getCallee()
         else:
-            raise ValueError, "direction be either inbound or outbound"
+            raise ValueError("direction be either inbound or outbound")
 
     def setCaller(self, address):
         if not isinstance(address, Address):
@@ -859,22 +859,22 @@ class Call(object):
 
     def calcAuth(self, method, uri, authchal, cred):
         if not cred:
-            raise RuntimeError, "Auth required, but not provided?"
+            raise RuntimeError("Auth required, but not provided?")
         (user, passwd) = cred
         authmethod, auth = authchal.split(' ', 1)
         if authmethod.lower() != 'digest':
-            raise ValueError, "Unknown auth method %s"%(authmethod)
+            raise ValueError("Unknown auth method %s"%(authmethod))
         chal = digestauth.parse_keqv_list(parse_http_list(auth))
         qop = chal.get('qop', None)
         if qop and qop.lower() != 'auth':
-            raise ValueError, "can't handle qop '%s'"%(qop)
+            raise ValueError("can't handle qop '%s'"%(qop))
         realm = chal.get('realm')
         algorithm = chal.get('algorithm', 'md5')
         nonce = chal.get('nonce')
         opaque = chal.get('opaque')
         H, KD = self._getHashingImplementation(algorithm)
         if user is None or passwd is None:
-            raise RuntimeError, "Auth required, %s %s"%(user,passwd)
+            raise RuntimeError("Auth required, %s %s"%(user,passwd))
         A1 = '%s:%s:%s'%(user, chal['realm'], passwd)
         A2 = '%s:%s'%(method, uri)
         if qop is not None:

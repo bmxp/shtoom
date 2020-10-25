@@ -203,7 +203,7 @@ class AllOptions(object):
     def setValue(self, option, value=NoDefaultOption, dynamic=False):
         if value is NoDefaultOption:
             # Unset the value
-            raise ValueError, "unsetting options dynamically is not supported"
+            raise ValueError("unsetting options dynamically is not supported")
         else:
             for g in self:
                 for o in g:

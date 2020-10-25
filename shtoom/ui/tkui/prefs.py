@@ -69,7 +69,7 @@ class PreferencesDialog(Dialog):
                     edit = b
                     get = lambda opt=name: self.booloptions[opt]
                 else:
-                    raise ValueError, "unknown option type %s"%(option.optionType)
+                    raise ValueError("unknown option type %s"%(option.optionType))
                 optf.pack(fill=X, side=TOP, ipady=4)
                 if edit is not None:
                     self.options[option.name] = ( option.type, get, edit )

@@ -4,7 +4,7 @@ import md5, sha, time, random
 def generate_nonce(bits, randomness=None):
     "This could be stronger"
     if bits%8 != 0:
-        raise ValueError, "bits must be a multiple of 8"
+        raise ValueError("bits must be a multiple of 8")
     nonce = sha.new(str(randomness) + str(time.time()) +
             str(random.random()) ).hexdigest()
     nonce = nonce[:bits/4]
@@ -25,7 +25,7 @@ class DigestAuthServer:
     def __init__(self, default_realm, algorithm="MD5"):
         self.default_realm = default_realm
         if algorithm != 'MD5':
-            raise ValueError, "Don't know about algorithm %s"%(algorithm)
+            raise ValueError("Don't know about algorithm %s"%(algorithm))
         self.algorithm = algorithm
         self._user_hashes = {}
 

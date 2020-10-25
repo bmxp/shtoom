@@ -36,7 +36,7 @@ class PlayingApp(VoiceApp):
         self.__dict__.update(kwargs)
         self.leg = None
         if not self.callURL:
-            raise ValueError, "must supply callURL"
+            raise ValueError("must supply callURL")
         super(PlayingApp, self).__init__(*args, **kwargs)
 
     def __start__(self):

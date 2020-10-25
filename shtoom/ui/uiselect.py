@@ -26,4 +26,4 @@ def findUserInterface(application, prefui):
         if main is not None:
             return main(application)
     # Other interfaces here
-    raise RuntimeError,  "Couldn't load _any_ userinterfaces"
+    raise RuntimeError("Couldn't load _any_ userinterfaces")

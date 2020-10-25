@@ -171,7 +171,7 @@ class Phone(BaseApplication):
             return self._createRTP(cookie, call.getLocalSIPAddress()[0],
                                            call.getSTUNState())
         else:
-            raise ValueError, "unknown call type %s"%(calltype)
+            raise ValueError("unknown call type %s"%(calltype))
 
     def _createRTP(self, cookie, localIP, withSTUN):
         from shtoom.rtp.protocol import RTPProtocol

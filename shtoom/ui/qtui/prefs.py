@@ -72,7 +72,7 @@ class PreferencesDialog(QDialog):
                     get = lambda n=c, b=buttons: findCheckedButton(n,b)
 
                 else:
-                    raise ValueError, "Unknown option %s"%(option.optionType)
+                    raise ValueError("Unknown option %s"%(option.optionType))
                 #print(option.getName(), get())
                 self.options[option.getName()] = (option.optionType, get, edit)
 

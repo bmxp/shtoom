@@ -39,7 +39,7 @@ class Announcement:
             if not line:
                 continue
             elif line[1] != '=':
-                raise BadAnnounce,"bad line %s"%(line)
+                raise BadAnnounce("bad line %s"%(line))
             elif line[0] == 'a':
                 subkey, val = line[2:].split(':',1)
                 self._a.setdefault(subkey, []).append(val)
@@ -108,7 +108,7 @@ class SDP:
         elif typechar is 'a':
             return self._ann.getA(option)
         else:
-            raise ValueError, "only know about suboptions for 'a' so far"
+            raise ValueError("only know about suboptions for 'a' so far")
 
     def parseM(self,value):
         if value:
@@ -129,7 +129,7 @@ class SDP:
             value = value[0]
             l = value.split()
             if len(l) != 6:
-                raise BadAnnounce,"wrong # fields in o=`%s'"%value
+                raise BadAnnounce("wrong # fields in o=`%s'"%value)
             ( self._o_username, self._o_sessid, self._o_version,
                 self._o_nettype, self._o_addrtype, self._o_addr ) = tuple(l)
             self.ipaddr = self._o_addr
@@ -165,16 +165,16 @@ class SimpleSDP:
             # default to a single channel
             encparams = 1
         if self.media != 'audio' and payload is None:
-            raise ValueError, "Don't know payloads for %s"%(self.media)
+            raise ValueError("Don't know payloads for %s"%(self.media))
         p = rtpPTDict.get((encname.upper(),clockrate,encparams))
         if payload is None:
             if p is None:
-                raise ValueError, "Don't know payload for %s/%s/%s"%(
-                    encname.upper(),clockrate,encparams)
+                raise ValueError("Don't know payload for %s/%s/%s"%(
+                    encname.upper(),clockrate,encparams))
             payload = p
         if p is not None and payload != p:
-            raise ValueError, "attempt to set payload to %s, should be %s"%(
-                                payload, p)
+            raise ValueError("attempt to set payload to %s, should be %s"%(
+                                payload, p))
         self.rtpmap.append((payload,"%d %s/%d%s%s"%(
                                           payload, encname, clockrate,
                                           ((encparams and '/') or ""),

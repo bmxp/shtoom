@@ -312,13 +312,13 @@ class NetAddress:
     def __init__(self, netaddress):
         parts = netaddress.split('/')
         if len(parts) > 2:
-            raise ValueError, "should be of form address/mask"
+            raise ValueError("should be of form address/mask")
         if len(parts) == 1:
             ip, mask = parts[0], 32
         else:
             ip, mask = parts[0], int(parts[1])
         if mask < 0 or mask > 32:
-            raise ValueError, "mask should be between 0 and 32"
+            raise ValueError("mask should be between 0 and 32")
 
         self.net = self.inet_aton(ip)
         self.mask = ( 2L**32 -1 ) ^ ( 2L**(32-mask) - 1 )

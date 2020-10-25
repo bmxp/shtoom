@@ -192,7 +192,7 @@ class  _StunBase(object):
             avstr = avstr + struct.pack('!hh', StunTypes[a], len(v)) + v
         pktlen = len(avstr)
         if pktlen > 65535:
-            raise ValueError, "stun request too big (%d bytes)"%pktlen
+            raise ValueError("stun request too big (%d bytes)"%pktlen)
         pkt = struct.pack('!hh16s', mt, pktlen, tid) + avstr
         if STUNVERBOSE:
             print("sending request %r with %d avpairs to %r (in state %s)"%(

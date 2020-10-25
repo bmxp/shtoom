@@ -140,7 +140,7 @@ class DougApplication(BaseApplication):
             self._voiceapps[cookie].va_callstart(inbound)
             d.addCallback(lambda x, ad=ad: ad)
         else:
-            raise ValueError, "unknown call type %s"%(calltype)
+            raise ValueError("unknown call type %s"%(calltype))
         d.addErrback(self.bong)
         return d
 

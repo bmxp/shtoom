@@ -6,7 +6,7 @@ def getLocalUsername():
         import pwd
     except ImportError:
         # XXX how to get username on Windows?
-        raise RuntimeError, "No pwd module - please supply a --username option"
+        raise RuntimeError("No pwd module - please supply a --username option")
     import os
     username = pwd.getpwuid(os.getuid())[0]
     return username

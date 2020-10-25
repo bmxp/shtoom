@@ -173,7 +173,7 @@ class VoiceApp(StateMachine):
         if leg2 is None:
             leg2 = self.getDefaultLeg()
         if leg1 is leg2:
-            raise ValueError, "can't join %r to itself!"%(leg1)
+            raise ValueError("can't join %r to itself!"%(leg1))
         else:
             b = Bridge(leg1, leg2)
             return b
@@ -182,7 +182,7 @@ class VoiceApp(StateMachine):
         "Send a string of DTMF keystrokes"
         for n,key in enumerate(digits):
             if key not in ',01234567890#*':
-                raise ValueError, key
+                raise ValueError(key)
             if key == ',':
                 # pause
                 continue

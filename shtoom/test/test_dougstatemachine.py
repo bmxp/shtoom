@@ -30,7 +30,7 @@ class StateMachineOne(StateMachine):
                )
 
     def unknown(self, evt):
-        raise ValueError, "got unknown event %s"%(evt.getEventName())
+        raise ValueError("got unknown event %s"%(evt.getEventName()))
 
     def begin(self, evt):
         self._out.append(0)
@@ -54,7 +54,7 @@ class StateMachineOne(StateMachine):
                )
 
     def thirdish(self, evt):
-        raise ValueError, "wrong event hit"
+        raise ValueError("wrong event hit")
 
     def third(self, evt):
         self._out.append(3)

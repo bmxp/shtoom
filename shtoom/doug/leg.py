@@ -232,7 +232,7 @@ class Leg(object):
         self.__dtmfSingleMode = single
         if inband:
             if numarray is None:
-                raise RuntimeError, "need numarray to do inband DTMF"
+                raise RuntimeError("need numarray to do inband DTMF")
             else:
                 self.__inbandDTMFdetector = InbandDtmfDetector(self)
         else:

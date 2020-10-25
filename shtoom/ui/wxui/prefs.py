@@ -60,7 +60,7 @@ class PreferencesDialog(wxDialog):
                         edit.SetStringSelection(val)
                     get = lambda e=edit: e.GetStringSelection()
                 else:
-                    raise ValueError, "Unknown option %s"%(option.optionType)
+                    raise ValueError("Unknown option %s"%(option.optionType))
                 edit.SetToolTipString(option.getDescription())
                 nbsizer.Add(edit, 1, wxEXPAND|wxALL|wxALIGN_CENTER_VERTICAL, 5)
                 self.options[optname] = (option.optionType, get, edit)

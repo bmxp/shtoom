@@ -144,7 +144,7 @@ class NTE:
         elif key == 'flash':
             self._payKey = chr(16)
         else:
-            raise ValueError, "%s is not a valid NTE"%(key)
+            raise ValueError("%s is not a valid NTE"%(key))
 
     def getKey(self):
         return self.key

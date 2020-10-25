@@ -277,7 +277,7 @@ class SDP:
         elif typechar is 'a':
             return getA(self, option)
         else:
-            raise ValueError, "only know about suboptions for 'a' so far"
+            raise ValueError("only know about suboptions for 'a' so far")
 
     def setServerIP(self, l):
         self._o_ipaddr = self.ipaddr = l
