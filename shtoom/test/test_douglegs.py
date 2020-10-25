@@ -25,7 +25,7 @@ class FakeLegForBridging:
 class DougLegTests(unittest.TestCase):
 
     def testLegBridgingSimple(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         l1 = FakeLegForBridging()
         l2 = FakeLegForBridging()
         b = Bridge(leg1=l1, leg2=l2)
@@ -44,7 +44,7 @@ class DougLegTests(unittest.TestCase):
 
     def test_legConstructor(self):
         from shtoom.sip import Dialog
-        ae = self.assertEquals
+        ae = self.assertEqual
         d = Dialog()
         cookie = 'NCookie'
         l = Leg(cookie, d)
@@ -60,7 +60,7 @@ class DougLegTests(unittest.TestCase):
 
     def test_legCallSetup(self):
         from shtoom.sip import Dialog
-        ae = self.assertEquals
+        ae = self.assertEqual
         d = Dialog()
         cookie = 'NCookie'
         class A:

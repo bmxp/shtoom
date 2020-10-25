@@ -18,7 +18,7 @@ class NetAddressTests(unittest.TestCase):
 
     def testNetAddressInit(self):
         from shtoom.stun import NetAddress
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         n1 = NetAddress('10/8')
         n2 = NetAddress('10.0.0.0/8')
@@ -34,7 +34,7 @@ class NetAddressTests(unittest.TestCase):
 
     def testNetAddressMembership(self):
         from shtoom.stun import NetAddress
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         n1 = NetAddress('10/8')
         ae(n1.check('10.1.2.3'), True)
@@ -68,8 +68,8 @@ class NetAddressTests(unittest.TestCase):
 
     def test_stundiscovery(self):
         from shtoom.stun import getSTUN, _NatType
-        ae = self.assertEquals
-        a_ = self.assert_
+        ae = self.assertEqual
+        a_ = self.assertTrue
         d = getSTUN()
         s = Saver()
         d.addCallback(s.save)

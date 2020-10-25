@@ -26,8 +26,8 @@ class DummyDev:
 class CodecTest(unittest.TestCase):
 
     def testCodeckerSanity(self):
-        a_ = self.assert_
-        ae = self.assertEquals
+        a_ = self.assertTrue
+        ae = self.assertEqual
         ar = self.assertRaises
         c = Codecker(PT_PCMU)
         a_(isinstance(c.format_to_codec.get(PT_PCMU), MulawCodec))
@@ -39,7 +39,7 @@ class CodecTest(unittest.TestCase):
         ar(ValueError, Codecker, PT_QCELP)
 
     def testNullCodec(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         n = NullCodec()
         ae(n._encode('frobozulate'), None)
@@ -47,11 +47,11 @@ class CodecTest(unittest.TestCase):
         ar(ValueError, Codecker, PT_CN)
 
     def testPassthruCodec(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         c = Codecker(PT_RAW)
         ae(c.getDefaultFormat(), PT_RAW)
         p = PassthruCodec()
-        ae = self.assertEquals
+        ae = self.assertEqual
 
         class Foo:
             def handle_media_sample(self, sample):
@@ -73,7 +73,7 @@ class CodecTest(unittest.TestCase):
     def testMuLawCodec(self):
         if codecs.mulaw is None:
             raise unittest.SkipTest("no mulaw support")
-        ae = self.assertEquals
+        ae = self.assertEqual
         c = Codecker(PT_PCMU)
         ae(c.getDefaultFormat(), PT_PCMU)
 
@@ -88,7 +88,7 @@ class CodecTest(unittest.TestCase):
     def testGSMCodec(self):
         if codecs.gsm is None:
             raise unittest.SkipTest("no gsm support")
-        ae = self.assertEquals
+        ae = self.assertEqual
         c = Codecker(PT_GSM)
         ae(c.getDefaultFormat(), PT_GSM)
 
@@ -115,7 +115,7 @@ class CodecTest(unittest.TestCase):
     def testSpeexCodec(self):
         if codecs.gsm is None:
             raise unittest.SkipTest("no speex support")
-        ae = self.assertEquals
+        ae = self.assertEqual
         c = Codecker(PT_SPEEX)
         ae(c.getDefaultFormat(), PT_SPEEX)
 
@@ -137,7 +137,7 @@ class CodecTest(unittest.TestCase):
         c.handle_audio('\0'*30)
 
     def testMediaLayer(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         dev = DummyDev()
         m = MediaLayer(device=dev)
         m.selectDefaultFormat([PT_PCMU,])
@@ -148,7 +148,7 @@ class CodecTest(unittest.TestCase):
         ae(m.getFormat(), PT_RAW)
 
     def testDougConverter(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         d = DougConverter(device=DummyDev())
         d.selectDefaultFormat([PT_RAW,])
         ae(d.getFormat(), PT_RAW)

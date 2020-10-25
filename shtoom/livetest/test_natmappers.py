@@ -55,7 +55,7 @@ class MapperTest(unittest.TestCase):
 
     def test_upnp_mapper(self):
         from shtoom.upnp import UPnPMapper
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         checkUPnP()
         mapper = UPnPMapper()
@@ -85,7 +85,7 @@ class MapperTest(unittest.TestCase):
 
     def test_stunmapper(self):
         from shtoom.stun import getSTUN, STUNMapper
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
 
         d = getSTUN()
@@ -121,7 +121,7 @@ class MapperTest(unittest.TestCase):
     def test_nullmapper(self):
         from shtoom.nat import getNullMapper
         mapper = getNullMapper()
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         uprot = DatagramProtocol()
         uport = reactor.listenUDP(0, uprot)

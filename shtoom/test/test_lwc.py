@@ -36,8 +36,8 @@ class LWCTests(unittest.TestCase):
         assert IBar in implementedBy(b)
 
         fooBar = IBar(b)
-        self.assert_(type(fooBar) is Bar)
-        self.assert_(IBar in implementedBy(fooBar))
+        self.assertTrue(type(fooBar) is Bar)
+        self.assertTrue(IBar in implementedBy(fooBar))
 
         # "Bar" was a factory because it took a single argument and
         # returned an implementor
@@ -48,7 +48,7 @@ class LWCTests(unittest.TestCase):
 
         # Only for testing purposes do we overwrite an old registration
         registerAdapter(fooToBar, Foo, IBar, overwrite=True)
-        self.assert_(IBar(f) is b2)
+        self.assertTrue(IBar(f) is b2)
 
         # "Faceted" lets us install components on an instance-by-instance
         # basis
@@ -59,8 +59,8 @@ class LWCTests(unittest.TestCase):
         p[IFoo] = f
         p[IBar] = b
 
-        self.assert_(IFoo(p) is f)
-        self.assert_(IBar(p) is b)
+        self.assertTrue(IFoo(p) is f)
+        self.assertTrue(IBar(p) is b)
 
         # Faceted can have adapter factories registered against them,
         # and "remembers" the output
@@ -72,9 +72,9 @@ class LWCTests(unittest.TestCase):
 
         registerAdapter(pluggableToBaz, Pluggable, IBaz)
 
-        self.assert_(IBaz not in p)
-        self.assert_(IBaz(p) == 1)
-        self.assert_(IBaz in p)
+        self.assertTrue(IBaz not in p)
+        self.assertTrue(IBaz(p) == 1)
+        self.assertTrue(IBaz in p)
 
         ## Interface-to-interface adaption, a rarer use case
         class IString(Interface):
@@ -92,29 +92,29 @@ class LWCTests(unittest.TestCase):
 
         registerAdapter(stringToFile, IString, IFile)
 
-        self.assert_(hasattr(IFile(Stringlike()), 'read'))
+        self.assertTrue(hasattr(IFile(Stringlike()), 'read'))
 
         registerAdapter(stringToFile, str, IFile)
 
-        self.assert_(hasattr(IFile("Hello"), 'read'))
+        self.assertTrue(hasattr(IFile("Hello"), 'read'))
 
         ## Declare that str implements IFoo
         declareImplements(str, IFoo)
 
         foo = "Foo"
 
-        self.assert_(IFoo in implementedBy(foo))
+        self.assertTrue(IFoo in implementedBy(foo))
 
         ## Register an interface-to-interface adapter for IFoo to IBar
         registerAdapter(fooToBar, IFoo, IBar)
 
         ## Now we can adapt strings to IBar
-        self.assert_(IBar("Foo") is b2)
+        self.assertTrue(IBar("Foo") is b2)
 
         if sys.version_info >= (2,4):
             from shtoom.test.py24tests import decoratedLWCTest
             takesABar = decoratedLWCTest(IBar, b2)
-            self.assert_(takesABar("This is not a bar, but can be adapted."))
+            self.assertTrue(takesABar("This is not a bar, but can be adapted."))
 
         ## We have context-sensitive adapter registries
         newRegistry = AdapterRegistry()
@@ -125,4 +125,4 @@ class LWCTests(unittest.TestCase):
 
         result = context.call({IAdapterRegistry: newRegistry},
                                         tryToAdaptToIBar, "A string")
-        self.assert_(result == 1)
+        self.assertTrue(result == 1)

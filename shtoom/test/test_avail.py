@@ -8,8 +8,8 @@ class AvailTest(unittest.TestCase):
 
     def test_audioAvail(self):
         from shtoom.avail.audio import listAudio
-        self.assert_(len(listAudio()) > 0)
+        self.assertTrue(len(listAudio()) > 0)
 
     def test_codecAvail(self):
         from shtoom.avail.codecs import listCodecs
-        self.assert_(len(listCodecs()) > 0, listCodecs())
+        self.assertTrue(len(listCodecs()) > 0, listCodecs())

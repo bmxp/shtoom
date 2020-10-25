@@ -254,15 +254,15 @@ class TestCallControl(unittest.TestCase):
             reactor.callLater(0, ui.dropCall)
             p.start()
             twisted.trial.util.wait(testdef)
-            self.assertEquals(au.actions, ['close', 'select', 'reopen', 'close'])
-            self.assertEquals(TestRTP.actions, ['create', 'start', 'stop'])
+            self.assertEqual(au.actions, ['close', 'select', 'reopen', 'close'])
+            self.assertEqual(TestRTP.actions, ['create', 'start', 'stop'])
             actions = ui.actions
             if TDEBUG: print(actions)
             cookie = actions[0][1]
             for a,c in actions[1:]:
-                self.assertEquals(cookie,c)
+                self.assertEqual(cookie,c)
             actions = [x[0] for x in actions]
-            self.assertEquals(actions, ['start', 'connected', 'drop', 'disconnected'])
+            self.assertEqual(actions, ['start', 'connected', 'drop', 'disconnected'])
             ui.actions = []
             au.actions = []
 
@@ -283,14 +283,14 @@ class TestCallControl(unittest.TestCase):
         reactor.callLater(0.3, lambda : p.sip.dropCall(ui.cookie))
         p.start()
         twisted.trial.util.wait(testdef)
-        self.assertEquals(au.actions, ['close', 'select', 'reopen', 'close'])
-        self.assertEquals(TestRTP.actions, ['create', 'start', 'stop'])
+        self.assertEqual(au.actions, ['close', 'select', 'reopen', 'close'])
+        self.assertEqual(TestRTP.actions, ['create', 'start', 'stop'])
         actions = ui.actions
         cookie = actions[0][1]
         for a,c in actions[1:]:
-            self.assertEquals(cookie,c)
+            self.assertEqual(cookie,c)
         actions = [x[0] for x in actions]
-        self.assertEquals(actions, ['start', 'connected', 'disconnected'])
+        self.assertEqual(actions, ['start', 'connected', 'disconnected'])
         if TDEBUG: print(actions)
 
     def testInboundRemoteBye(self):
@@ -310,13 +310,13 @@ class TestCallControl(unittest.TestCase):
         d.addCallback(p.sip.dropFakeInbound)
         p.start()
         twisted.trial.util.wait(testdef)
-        self.assertEquals(au.actions, ['wave', 'close', 'select', 'reopen', 'close'])
-        self.assertEquals(TestRTP.actions, ['create', 'start', 'stop'])
+        self.assertEqual(au.actions, ['wave', 'close', 'select', 'reopen', 'close'])
+        self.assertEqual(TestRTP.actions, ['create', 'start', 'stop'])
         actions = ui.actions
         cookie = actions[0][1]
         if TDEBUG: print(actions)
         for a,c in actions[1:]:
-            self.assertEquals(cookie,c)
+            self.assertEqual(cookie,c)
         actions = [x[0] for x in actions]
         # XXX no connected??
-        self.assertEquals(actions, ['incoming', 'connected', 'start', 'disconnected'])
+        self.assertEqual(actions, ['incoming', 'connected', 'start', 'disconnected'])

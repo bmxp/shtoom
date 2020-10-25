@@ -42,7 +42,7 @@ class Saver:
 class DefcacheTests(unittest.TestCase):
 
     def test_defcache(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
 
         t = TestBlobby()
@@ -194,7 +194,7 @@ class DefcacheTests(unittest.TestCase):
         import sys
         if sys.version_info < (2,4):
             raise unittest.SkipTest('decorators only available on 2.4 and later')
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
 
         # Has to be elsewhere to avoid SyntaxErrors :-(

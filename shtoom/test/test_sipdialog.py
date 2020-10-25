@@ -11,7 +11,7 @@ from shtoom import sip as shsip
 class DialogTests(unittest.TestCase):
     def testDialogCtor(self):
         from shtoom.sip import Dialog, Address
-        ae = self.assertEquals
+        ae = self.assertEqual
 
         addr1 = '"anthony" <sip:anthony@ekit-inc.com>;tag=03860126'
         addr2 = 'sip:96748002@gw2;tag=3409638C-1B50'

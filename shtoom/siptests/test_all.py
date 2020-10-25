@@ -15,12 +15,12 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse01)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse01(self, m):
         self.parsed = 1
-        self.assertEquals(m.method.lower(), 'invite')
-        self.assertEquals(m.headers['call-id'], '0ha0isndaksdj@10.1.1.1')
+        self.assertEqual(m.method.lower(), 'invite')
+        self.assertEqual(m.headers['call-id'], '0ha0isndaksdj@10.1.1.1')
 
     def test_parse02_msg(self):
         sip = open(os.path.join(testdir, 'test2.txt')).read().replace('\n','\r\n')
@@ -28,13 +28,13 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse02)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse02(self, m):
         self.parsed = 1
-        self.assertEquals(m.method.lower(), 'invite')
-        self.assertEquals(m.headers['require'], ['newfeature1, newfeature2'])
-        self.assertEquals(m.headers['proxy-require'], ['newfeature3, newfeature4'])
+        self.assertEqual(m.method.lower(), 'invite')
+        self.assertEqual(m.headers['require'], ['newfeature1, newfeature2'])
+        self.assertEqual(m.headers['proxy-require'], ['newfeature3, newfeature4'])
 
     def test_parse03_msg(self):
         sip = open(os.path.join(testdir, 'test3.txt')).read().replace('\n','\r\n')
@@ -42,14 +42,14 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse03)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse03(self, m):
         self.parsed = 1
-        self.assertEquals(m.method.lower(), 'invite')
-        self.assertEquals(m.headers['to'], 'isbn:2983792873')
-        self.assertEquals(m.headers['from'], 'http://www.cs.columbia.edu')
-        self.assertEquals(m.headers['contact'], 'Joe Bob Briggs <urn:ipaddr:122.1.2.3>')
+        self.assertEqual(m.method.lower(), 'invite')
+        self.assertEqual(m.headers['to'], 'isbn:2983792873')
+        self.assertEqual(m.headers['from'], 'http://www.cs.columbia.edu')
+        self.assertEqual(m.headers['contact'], 'Joe Bob Briggs <urn:ipaddr:122.1.2.3>')
 
     def test_parse04_msg(self):
         sip = open(os.path.join(testdir, 'test4.txt')).read().replace('\n','\r\n')
@@ -57,7 +57,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse04)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse04(self, m):
         self.parsed = 1
@@ -68,7 +68,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse05)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse05(self, m):
         self.parsed = 1
@@ -79,7 +79,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse06)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse06(self, m):
         self.parsed = 1
@@ -90,7 +90,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse07)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse07(self, m):
         self.parsed = 1
@@ -101,7 +101,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse08)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse08(self, m):
         self.parsed = 1
@@ -112,7 +112,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse09)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse09(self, m):
         self.parsed = 1
@@ -123,7 +123,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse10)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse10(self, m):
         self.parsed = 1
@@ -134,7 +134,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse11)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse11(self, m):
         self.parsed = 1
@@ -145,7 +145,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse12)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse12(self, m):
         self.parsed = 1
@@ -156,7 +156,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse13)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse13(self, m):
         self.parsed = 1
@@ -167,7 +167,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse14)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse14(self, m):
         self.parsed = 1
@@ -178,7 +178,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse15)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse15(self, m):
         self.parsed = 1
@@ -189,7 +189,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse16)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse16(self, m):
         self.parsed = 1
@@ -200,7 +200,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse17)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse17(self, m):
         self.parsed = 1
@@ -211,7 +211,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse18)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse18(self, m):
         self.parsed = 1
@@ -222,7 +222,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse19)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse19(self, m):
         self.parsed = 1
@@ -233,7 +233,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse20)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse20(self, m):
         self.parsed = 1
@@ -244,7 +244,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse21)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse21(self, m):
         self.parsed = 1
@@ -255,7 +255,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse22)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse22(self, m):
         self.parsed = 1
@@ -266,7 +266,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse23)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse23(self, m):
         self.parsed = 1
@@ -277,7 +277,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse24)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse24(self, m):
         self.parsed = 1
@@ -288,7 +288,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse25)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse25(self, m):
         self.parsed = 1
@@ -299,7 +299,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse26)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse26(self, m):
         self.parsed = 1
@@ -310,7 +310,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse27)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse27(self, m):
         self.parsed = 1
@@ -321,7 +321,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse28)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse28(self, m):
         self.parsed = 1
@@ -332,7 +332,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse29)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse29(self, m):
         self.parsed = 1
@@ -343,7 +343,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse30)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse30(self, m):
         self.parsed = 1
@@ -354,7 +354,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse31)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse31(self, m):
         self.parsed = 1
@@ -365,7 +365,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse32)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse32(self, m):
         self.parsed = 1
@@ -376,7 +376,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse33)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse33(self, m):
         self.parsed = 1
@@ -387,7 +387,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse34)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse34(self, m):
         self.parsed = 1
@@ -398,7 +398,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse35)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse35(self, m):
         self.parsed = 1
@@ -409,7 +409,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse36)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse36(self, m):
         self.parsed = 1
@@ -420,7 +420,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse37)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse37(self, m):
         self.parsed = 1
@@ -431,7 +431,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse38)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse38(self, m):
         self.parsed = 1
@@ -442,7 +442,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse39)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse39(self, m):
         self.parsed = 1
@@ -453,7 +453,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse40)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,1)
+        self.assertEqual(self.parsed,1)
 
     def cb_parse40(self, m):
         self.parsed = 1
@@ -464,7 +464,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse41)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse41(self, m):
         self.parsed = 1
@@ -475,7 +475,7 @@ class SIPParser(unittest.TestCase):
         mp = MP(self.cb_parse42)
         m = mp.dataReceived(sip)
         mp.dataDone()
-        self.assertEquals(self.parsed,0)
+        self.assertEqual(self.parsed,0)
 
     def cb_parse42(self, m):
         self.parsed = 1

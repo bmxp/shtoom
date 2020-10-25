@@ -21,7 +21,7 @@ class SDPTests(unittest.TestCase):
         s.addRtpMap('GSM', 8000)
         sdpin = s.show()
         sdpout = SDP(sdpin)
-        ae = self.assertEquals
+        ae = self.assertEqual
         ae(sdpout.port, 1234)
         ae(sdpout.ipaddr, '10.11.12.13')
         ae(sdpout.get('a', 'rtpmap'), ['0 PCMU/8000/1', '3 GSM/8000/1'])
@@ -32,7 +32,7 @@ class SDPTests(unittest.TestCase):
     def testSDPCreation(self):
         from shtoom.sdp import SDP, MediaDescription
         from shtoom.rtp.formats import PT_PCMU, PT_SPEEX, PT_NTE, PT_CN
-        ae = self.assertEquals
+        ae = self.assertEqual
 
         s = SDP()
         md = MediaDescription()
@@ -57,11 +57,11 @@ class SDPTests(unittest.TestCase):
         ae(audio1.rtpmap.keys(), [0,3])
         video1 = sdp1.getMediaDescription('video')
         ae(video1.rtpmap.keys(), [31])
-        self.assertEquals(sdp1.show(), sdptext1)
+        self.assertEqual(sdp1.show(), sdptext1)
 
     def testIntersectSDP(self):
         from shtoom.sdp import SDP
-        ae = self.assertEquals
+        ae = self.assertEqual
         sdp1 = SDP(sdptext1)
         ae(sdp1.show(), sdptext1)
         sdp2 = SDP(sdptext2)
@@ -77,7 +77,7 @@ class SDPTests(unittest.TestCase):
         from shtoom.sdp import SDP
         from shtoom.rtp.formats import PT_SPEEX, PT_SPEEX_16K, PT_GSM, PT_PCMU
         sdp4 = SDP(sdptext4)
-        ae = self.assertEquals
+        ae = self.assertEqual
         ae(sdp4.show(), sdptext4)
         rtpmap = sdp4.getMediaDescription('audio').rtpmap
         ae(rtpmap.keys(), [3, 101])
@@ -105,7 +105,7 @@ class SDPTests(unittest.TestCase):
         # cisco creates multipart/mixed messages. I shit you not.
         from twisted.protocols import sip as tpsip
         from shtoom.sip import buildSDP
-        ae = self.assertEquals
+        ae = self.assertEqual
 
         l = []
         parser = tpsip.MessagesParser(l.append)

@@ -27,7 +27,7 @@ class DummyApp:
 class CredCacheTests(unittest.TestCase):
 
     def test_credcache_set_save(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         app = DummyApp()
         c = CredCache(app)
         ae(c.getCred('sip.foo.com'), None)
@@ -44,7 +44,7 @@ class CredCacheTests(unittest.TestCase):
 
     def test_credcache_load(self):
         from StringIO import StringIO
-        ae = self.assertEquals
+        ae = self.assertEqual
         app = DummyApp()
         c = CredCache(app)
         s = StringIO()

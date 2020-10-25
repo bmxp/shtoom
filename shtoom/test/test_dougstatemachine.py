@@ -93,7 +93,7 @@ class StateMachineTest(unittest.TestCase):
         s = Saver()
         d.addCallback(s.save)
         util.wait(d)
-        self.assertEquals(s.res, [0,1,2,3])
+        self.assertEqual(s.res, [0,1,2,3])
 
     def testStateMachineWithDeferreds(self):
         d = defer.Deferred()
@@ -106,7 +106,7 @@ class StateMachineTest(unittest.TestCase):
         s = Saver()
         d.addCallback(s.save)
         util.wait(d)
-        self.assertEquals(s.res, [0,1,2,3])
+        self.assertEqual(s.res, [0,1,2,3])
 
 
     def testBrokenStateMachine(self):
@@ -117,5 +117,5 @@ class StateMachineTest(unittest.TestCase):
         d.addCallback(s.save)
         d.addErrback(s.error)
         util.wait(d)
-        self.assertEquals(s.res, None)
-        self.assert_(isinstance(s.err.value, EventNotSpecifiedError))
+        self.assertEqual(s.res, None)
+        self.assertTrue(isinstance(s.err.value, EventNotSpecifiedError))

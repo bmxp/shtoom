@@ -15,7 +15,7 @@ class AddressParsingTests(unittest.TestCase):
                   'sip:foo@bar.com',
                   'sip:foo@bar.com;tag=01234567',
                 ]
-        ae = self.assertEquals
+        ae = self.assertEqual
         for addr in addrs:
             ae(addr, shsip.formatAddress(tpsip.parseAddress(addr)))
 
@@ -26,7 +26,7 @@ class AddressParsingTests(unittest.TestCase):
                   '"foo bar" <sip:foo@bar.com>',
                   'sip:foo@bar.com;tag=01234567',
                 ]
-        ae = self.assertEquals
+        ae = self.assertEqual
         for addr in addrs:
             ae(addr, str(shsip.Address(addr)))
         addr = shsip.Address(('anthony', 'sip:anthony@ekit-inc.com', {'tag':'03860126',}))

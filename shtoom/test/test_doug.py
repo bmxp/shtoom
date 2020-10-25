@@ -166,7 +166,7 @@ class DougDTMFTest(unittest.TestCase):
         # We explicitly start the voiceapp here
         reactor.callLater(0, app.startVoiceApp)
         util.wait(d)
-        self.assertEquals(s.val, 'hello world')
+        self.assertEqual(s.val, 'hello world')
         app.stopSIP()
 
     # This test is fundamentally broken.
@@ -184,7 +184,7 @@ class DougDTMFTest(unittest.TestCase):
         capp._voiceappArgs = {'callURL': 'sip:foo@127.0.0.1:%d'%port }
         reactor.callLater(0, capp.startVoiceApp)
         util.wait(d)
-        self.assertEquals(s.val, 'hello world')
+        self.assertEqual(s.val, 'hello world')
         lapp.stopSIP()
         capp.stopSIP()
 
@@ -206,7 +206,7 @@ class DougDTMFTest(unittest.TestCase):
         reactor.callLater(0, capp.startVoiceApp)
         util.wait(d1)
         util.wait(d2)
-        self.assertEquals(s1.val, 'hello world')
-        self.assertEquals(s2.val, 'completed')
+        self.assertEqual(s1.val, 'hello world')
+        self.assertEqual(s2.val, 'completed')
         lapp.stopSIP()
         capp.stopSIP()

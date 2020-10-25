@@ -29,7 +29,7 @@ class DTMFDetectTest(unittest.TestCase):
             if digit != cur:
                 seen.append(digit)
                 cur = digit
-        self.assertEquals(seen, ['', '3', '', '1', '', '4', '', '1', '', '#'])
+        self.assertEqual(seen, ['', '3', '', '1', '', '4', '', '1', '', '#'])
 
     def test_dtmfdetect_generated(self):
         from shtoom.doug import dtmf
@@ -37,7 +37,7 @@ class DTMFDetectTest(unittest.TestCase):
         for k in dtmf.dtmf2freq.keys():
             s = dtmf.dtmfGenerator(k, 320)
             digit = detect.detect(s)
-            self.assertEquals(k, digit)
+            self.assertEqual(k, digit)
 
     def test_dtmfdetect_speex(self):
         # Test DTMF after the mangling of speex
@@ -74,11 +74,11 @@ class DTMFDetectTest(unittest.TestCase):
                 s1res.append(codec.decode(frame))
             for frame in codec.buffer_and_encode(s2):
                 s2res.append(codec.decode(frame))
-            self.failUnless(len(s1res) == 1, s1res)
-            self.failUnless(len(s2res) == 1, s2res)
+            self.assertTrue(len(s1res) == 1, s1res)
+            self.assertTrue(len(s2res) == 1, s2res)
             s = s1res[0]+s2res[0]
             digit = detect.detect(s)
-            self.assertEquals(k, digit, msg="k: %s, digit: %s, s=%s" % (k, digit, `s`,))
+            self.assertEqual(k, digit, msg="k: %s, digit: %s, s=%s" % (k, digit, `s`,))
             silence = '\0'*320
             for frame in codec.buffer_and_encode(silence):
                 codec.decode(frame)

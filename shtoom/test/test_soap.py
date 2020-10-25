@@ -8,7 +8,7 @@ class SoapTests(unittest.TestCase):
 
     def test_soaprequest(self):
         from shtoom.soapsucks import SOAPRequestFactory, BeautifulSax
-        ae = self.assertEquals
+        ae = self.assertEqual
         schema = "urn:schemas-upnp-org:service:WANIPConnection:1"
         s = SOAPRequestFactory('http://127.0.0.1:5533/', schema)
         request = s.GetGenericPortMappingEntry(NewPortMappingIndex=12)
@@ -60,7 +60,7 @@ class SoapTests(unittest.TestCase):
 
     def test_soap_scpd(self):
         from shtoom.soapsucks import SOAPRequestFactory, BeautifulSax
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         schema = "urn:schemas-upnp-org:service:WANIPConnection:1"
         soap = SOAPRequestFactory('http://127.0.0.1:5533/', schema)

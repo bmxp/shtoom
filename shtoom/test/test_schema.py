@@ -8,7 +8,7 @@ from shtoom.schema import *
 class SchemaTests(unittest.TestCase):
 
     def test_basevalues(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         s = SchemaObject(name='foo')
         s.value = 1234
         ae(s.value, 1234)
@@ -16,7 +16,7 @@ class SchemaTests(unittest.TestCase):
         ae(s.value, 1236)
 
     def test_integervalues(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         i = Integer(name='bar')
         i.value = 1234
@@ -39,7 +39,7 @@ class SchemaTests(unittest.TestCase):
         ae(i.value, 12)
 
     def test_booleanvalues(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         b = Boolean(name='bazbool')
         for v in True, 'True', 1, '1', 'yes', 'YES':
@@ -52,7 +52,7 @@ class SchemaTests(unittest.TestCase):
         ar(SchemaValueError, setattr, b, 'value', ValueError)
 
     def test_floatvalues(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         f = Float(name='bar')
         f.value = 1234
@@ -76,7 +76,7 @@ class SchemaTests(unittest.TestCase):
         ae(f.value, 12.0)
 
     def test_stringvalues(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         klasses = String, Password
         for klass in klasses:
@@ -87,7 +87,7 @@ class SchemaTests(unittest.TestCase):
                 ae(s.value, unicode(v))
 
     def test_objectlist(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         for klass in (List, Choice):
             lobj = klass()
@@ -106,7 +106,7 @@ class SchemaTests(unittest.TestCase):
             ae([ x.value for x in lobj ], ['abc', 'ghi', 15])
 
     def test_objectchoice(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         ch = Choice(name='choicelist')
         for val in 'abc', 'def', 'ghi', 'jkl', 'mno':
@@ -123,7 +123,7 @@ class SchemaTests(unittest.TestCase):
         # ch.remove('abc')
 
     def test_objectdict(self):
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         dobj = Dict()
         for val in 'abc', 'def', 'ghi':

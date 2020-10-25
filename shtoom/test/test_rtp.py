@@ -8,7 +8,7 @@ from twisted.trial import unittest
 class TestRTP(unittest.TestCase):
     def testNTEencoding(self):
         from shtoom.rtp.packets import NTE
-        ae = self.assertEquals
+        ae = self.assertEqual
         nte = NTE('0', 1000)
         ae(nte.isDone(), False)
         ae(nte.getPayload(1000), '\x00\n\x00\x00')
@@ -38,7 +38,7 @@ class TestRTP(unittest.TestCase):
         from shtoom.rtp.formats import PT_CN, PT_PCMU, PT_SPEEX, PT_SPEEX_16K, PT_NTE
         from shtoom.rtp.formats import RTPDict
 
-        ae = self.assertEquals
+        ae = self.assertEqual
         ae(PT_CN, RTPDict[RTPDict[PT_CN]])
         ae(PT_PCMU, RTPDict[RTPDict[PT_PCMU]])
         for pt in PT_SPEEX, PT_SPEEX_16K, PT_CN, PT_PCMU, PT_NTE:
@@ -48,7 +48,7 @@ class TestRTP(unittest.TestCase):
         from shtoom.rtp.packets import RTPPacket
         from shtoom.rtp.protocol import parse_rtppacket
         from shtoom.rtp.formats import PT_PCMU, PT_SPEEX, PT_GSM, PT_CN
-        ae = self.assertEquals
+        ae = self.assertEqual
 
         ts = 12345678
         seq = 12345
@@ -72,7 +72,7 @@ class TestRTP(unittest.TestCase):
     def testSDPGen(self):
         from shtoom.rtp.formats import SDPGenerator, PTMarker
         from shtoom.sdp import SDP
-        a_ = self.assert_
+        a_ = self.assertTrue
         class DummyRTP:
             def getVisibleAddress(self):
                 return ('127.0.0.1', 23456)

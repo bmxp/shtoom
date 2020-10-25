@@ -106,7 +106,7 @@ class UPnPTest(unittest.TestCase):
 
     def test_upnp_mapper(self):
         from shtoom.upnp import UPnPMapper
-        ae = self.assertEquals
+        ae = self.assertEqual
         ar = self.assertRaises
         checkUPnP()
         mapper = UPnPMapper()

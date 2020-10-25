@@ -36,8 +36,8 @@ class AudioDevsTest(unittest.TestCase):
     def test_create(self):
         from shtoom.audio import getAudioDevice
         from twisted.internet.task import LoopingCall
-        ae = self.assertEquals
-        a_ = self.assert_
+        ae = self.assertEqual
+        a_ = self.assertTrue
 
         dummymod = _dummy()
         dev = FakeDevice()

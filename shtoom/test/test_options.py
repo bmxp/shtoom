@@ -20,9 +20,9 @@ class OptionsTests(unittest.TestCase):
             group.add(O.NumberOption('num%d'%(gnum),
                                         'this is number option %d'%gnum))
             all.add(group)
-        self.assertEquals(len(list(all)), 10)
-        self.assertEquals(len(list(list(all)[0])),3)
-        self.assertEquals(len(list(list(all)[-1])),3)
+        self.assertEqual(len(list(all)), 10)
+        self.assertEqual(len(list(list(all)[0])),3)
+        self.assertEqual(len(list(list(all)[-1])),3)
 
     def test_duplicateOptions(self):
         all = O.AllOptions()
@@ -67,7 +67,7 @@ class OptionsTests(unittest.TestCase):
     def test_dynamicUpdate(self):
         # Test that dynamically created options aren't saved to the option
         # file. We round-trip through ConfigParser to be sure
-        ae = self.assertEquals
+        ae = self.assertEqual
         all = O.AllOptions()
         g = O.OptionGroup('group','test group')
         g.add(O.StringOption('optiona', 'option - a', default='first'))
