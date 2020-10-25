@@ -1,6 +1,7 @@
 # Copyright (C) 2004 Anthony Baxter
 
-import baseaudio, ossaudiodev
+import baseaudio
+import ossaudiodev
 
 # from Twisted
 from twisted.python import log

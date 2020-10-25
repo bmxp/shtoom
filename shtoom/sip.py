@@ -1,6 +1,6 @@
 # Copyright (C) 2004 Anthony Baxter
 
-'''SIP client code.'''
+"""SIP client code."""
 
 # A Note For The Reader: This code in this module is _hairy_. It's also
 # ugly, a mess and sorely in need of redesign and refactoring. Do _not_
@@ -10,7 +10,14 @@
 # And yes, a redesign (to make it unit testable, for one thing) is very
 # much planned and it is gradually being refactored.
 
-import copy, digestauth, md5, random, sha, socket, sys, time
+import copy
+import digestauth
+import md5
+import random
+import sha
+import socket
+import sys
+import time
 from urllib2 import parse_http_list
 
 from interfaces import SIP as ISip

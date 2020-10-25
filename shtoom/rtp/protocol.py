@@ -256,7 +256,7 @@ class RTPProtocol(DatagramProtocol):
 
         try:
             self.transport.write(packet.netbytes(), self.dest)
-        except Exception, le:
+        except Exception as le:
             pass
 
     def _send_cn_packet(self, logit=False):

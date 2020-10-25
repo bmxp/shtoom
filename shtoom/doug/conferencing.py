@@ -206,7 +206,7 @@ class Room:
             # ooo. a use of reduce. first time for everything...
             try:
                 combined = reduce(lambda x,y: audioop.add(x, y, 2), scaledsamples)
-            except audioop.error, exc:
+            except audioop.error as exc:
                 # XXX tofix!
                 print("combine got error %s"%(exc,))
                 print("lengths", [len(x) for x in scaledsamples])
@@ -231,7 +231,7 @@ class Room:
                 scaled = [ audioop.mul(x, 2, 1.0/len(samples)) for x in samples]
                 try:
                     out = reduce(lambda x,y: audioop.add(x, y, 2), scaled)
-                except audioop.error, exc:
+                except audioop.error as exc:
                     # XXX tofix!
                     print("combine got error %s"%(exc,))
                     print("lengths", [len(x) for x in scaled])

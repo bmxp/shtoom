@@ -45,10 +45,10 @@ class SAP:
         return SDP(self.text,sdrcompat)
 
     def decrypt(self):
-        raise "sorry","Don't know how to handle decryption"
+        raise "sorry, don't know how to handle decryption"
 
     def decompress(self):
-        raise "sorry","Don't know how to handle decompression"
+        raise "sorry, don't know how to handle decompression"
 
 
 SAPADDR = ["sap.mcast.net", "224.2.127.255"]

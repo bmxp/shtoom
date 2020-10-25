@@ -233,7 +233,7 @@ def _dispatch_dbus_method_call(target_method, argument_list, message):
     """
     try:
         retval = target_method(*argument_list)
-    except Exception, e:
+    except Exception as e:
         if e.__module__ == '__main__':
             # FIXME: is it right to use .__name__ here?
             error_name = e.__class__.__name__

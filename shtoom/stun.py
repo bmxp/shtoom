@@ -274,8 +274,8 @@ class StunDiscoveryProtocol(DatagramProtocol, _StunBase):
                                                 self.oldTIDs)
         if not resdict:
             return
-        if STUNVERBOSE: print('calling handleStunState%s'%(self._stunState)
-        getattr(self, 'handleStunState%s'%(self._stunState))(resdict, address))
+        if STUNVERBOSE: print('calling handleStunState%s'%(self._stunState))
+        getattr(self, 'handleStunState%s'%(self._stunState))(resdict, address)
 
     def handleStunState1(self, resdict, address):
         self.__dict__.update(resdict)

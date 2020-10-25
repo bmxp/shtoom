@@ -8,7 +8,7 @@ class RPC:
     """
     name = 'undefined'
 
-    def getMethods(self)
+    def getMethods(self):
         d = {}
         for attr in dir(self):
             if attr.startswith('rpc_'):
@@ -18,16 +18,15 @@ class RPC:
 
 
 class PhoneRPC:
-    "RPC interface for the phone"
+    """RPC interface for the phone"""
     name = 'ShtoomPhone'
 
     def rpc_call(self, uri):
-        "make a call"
+        """make a call"""
         from __main__ import app
         return app.ipcCommand('call', uri)
 
     def rpc_hangup(self, uri):
-        "hangup current call"
+        """hangup current call"""
         from __main__ import app
         return app.ipcCommand('hangup', uri)
-

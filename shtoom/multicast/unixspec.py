@@ -17,7 +17,8 @@ def leaveGroup(sock,addr):
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_DROP_MEMBERSHIP, mreq)
 
 def _addr2mreq(addr):
-    import netnum, struct
+    import netnum
+    import struct
 
     if type(addr) is type(""):
         group = socket.gethostbyname(addr)
