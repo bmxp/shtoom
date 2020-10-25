@@ -9,7 +9,7 @@ testdir = os.path.dirname(__file__)
 class SIPParser(unittest.TestCase):
 
     def test_parse01_msg(self):
-        print os.getcwd()
+        print(os.getcwd())
         sip = open(os.path.join(testdir, 'test1.txt')).read().replace('\n','\r\n')
         self.parsed = 0
         mp = MP(self.cb_parse01)

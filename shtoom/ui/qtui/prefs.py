@@ -73,7 +73,7 @@ class PreferencesDialog(QDialog):
 
                 else:
                     raise ValueError, "Unknown option %s"%(option.optionType)
-                #print option.getName(), get()
+                #print(option.getName(), get())
                 self.options[option.getName()] = (option.optionType, get, edit)
 
             self.tabs[group.getName()] = Tab
@@ -117,6 +117,6 @@ class PreferencesDialog(QDialog):
         self.main.preferences_save(out)
 
 def findCheckedButton(name, blist):
-    print "buttons", name, ', '.join([str(x.text()) for x in blist])
+    print("buttons", name, ', '.join([str(x.text()) for x in blist]))
     for b in blist:
         if b.isChecked(): return b.text()

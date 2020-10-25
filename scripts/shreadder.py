@@ -34,12 +34,12 @@ class Recorder:
         deviations = [ mean-x for x in abssamp ]
         var = reduce(lambda x,y: x+(y*y), deviations)/float(sampcount - 1)
         std = math.sqrt(var)
-        #print "Mean % 5d  RMS % 5d STD % 3d"%(mean,rms,std)
+        #print("Mean % 5d  RMS % 5d STD % 3d"%(mean,rms,std))
         return
 
     def handle_media_sample(self, sample):
         if not sample:
-            print "no audio, skipping"
+            print("no audio, skipping")
             return
         if self._outfp:
             self._outfp.write(sample.data)
@@ -48,7 +48,7 @@ class Recorder:
             self.seq = (self.seq + 1) % 2**48
             self._dev.write(packet)
         #if len(packet.data) != 320:
-        #    print "discarding bad length (%d) packet"%(len(packet.data))
+        #    print("discarding bad length (%d) packet"%(len(packet.data)))
         #else:
         #    self.analyse(struct.unpack('160h', packet.data))
 
@@ -67,7 +67,7 @@ def main(Recorder = Recorder):
     if len(sys.argv) > 1:
         fmt = sys.argv[1]
         if not hasattr(formats, fmt):
-            print "unknown PT marker %s"%(fmt)
+            print("unknown PT marker %s"%(fmt))
             sys.exit(1)
         dev.selectDefaultFormat([getattr(formats,fmt),])
     else:

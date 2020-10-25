@@ -35,7 +35,7 @@ def findAudioInterface():
     if app:
         audioPref = app.getPref('audio')
 
-    print "audioPref is", audioPref
+    print("audioPref is", audioPref)
     if audioPref:
         audioint = audioOptions.get(audioPref)
         if not audioint:

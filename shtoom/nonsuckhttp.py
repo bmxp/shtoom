@@ -51,7 +51,7 @@ class Response:
 
     def addheader(self, key, value):
         """Add header for field key handling repeats."""
-        #print "got a header", key, value
+        #print("got a header", key, value)
         prev = self.dict.get(key)
         if prev is None:
             self.dict[key] = value
@@ -136,7 +136,7 @@ class HTTPClient(basic.LineReceiver):
         self.__buffer += data
 
     def connectionMade(self):
-        #print "connectionMade"
+        #print("connectionMade")
         pass
 
     handleStatus = handleHeader = handleEndHeaders = lambda *args: None
@@ -154,7 +154,7 @@ class HTTPClient(basic.LineReceiver):
 
     def connectionMade(self):
         from twisted.internet import reactor
-        #print "sending request"
+        #print("sending request")
         self.sendCommand(self.request.get_method(), self.request.get_selector() or '/')
         self.sendHeader('Host', self.request.get_host())
         if self.request.has_data():
@@ -330,12 +330,12 @@ def urlopen(url, factory=None, timeout=300):
 if __name__ == "__main__":
     from twisted.internet import reactor
     def testresp(r):
-        print r, type(r)
-        print r.info(), r.geturl()
-        print r.read()
+        print(r, type(r))
+        print(r.info(), r.geturl())
+        print(r.read())
         reactor.stop()
     def testerr(e):
-        print "http failed with", e
+        print("http failed with", e)
         reactor.stop()
 
     from twisted.internet import reactor

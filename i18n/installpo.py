@@ -30,14 +30,14 @@ def main(target):
         lang, ext = os.path.basename(mo).split('.')
         langdir = os.path.join(target, lang)
         if not os.path.isdir(langdir):
-            print "making %s"%(langdir)
+            print("making %s"%(langdir))
             os.mkdir(langdir)
         lcdir = os.path.join(langdir, 'LC_MESSAGES')
         if not os.path.isdir(lcdir):
-            print "making %s"%(lcdir)
+            print("making %s"%(lcdir))
             os.mkdir(lcdir)
         dest = os.path.join(lcdir, 'shtoom.mo')
-        print "copying %s -> %s"%(mo, dest)
+        print("copying %s -> %s"%(mo, dest))
         shutil.copy(mo, dest)
 
 

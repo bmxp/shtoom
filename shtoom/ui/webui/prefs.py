@@ -132,7 +132,7 @@ class PreferencesPage(rend.Page):
         def genSwitchers():
             for opt in allOptions:
                 name = opt.getName()
-                print name
+                print(name)
                 if name in interesting:
                     yield ((name, opt.getDescription()), T.invisible(render=self.render_option, data=opt))
 
@@ -216,7 +216,7 @@ class Configure(rend.Page):
             if value is not None:
                 O.setValue(value)
             else:
-                print "VALUE FOR OPTION IS NONE:", name
+                print("VALUE FOR OPTION IS NONE:", name)
 
         all.saveOptsFile()
         inevow.IRequest(ctx).redirect('/?message=Options+Set.')
@@ -265,7 +265,7 @@ class WizardConfiguration(rend.Page):
         self.original.setValue('created_by_wizard', '')
         ## reload app options
         self.original.loadOptsFile()
-        print "OPTS LOADED", open(rcname).read()
+        print("OPTS LOADED", open(rcname).read())
     currentConfiguration = property(getCurrentConfig, setCurrentConfig)
 
     def render_currentConfiguration(self, ctx, data):

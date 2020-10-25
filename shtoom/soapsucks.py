@@ -79,7 +79,7 @@ class _BeautifulSaxParser(ContentHandler, Tag):
         self.currentData = ''
 
     def startElement(self, name, attrs):
-        #print "startElement", name, attrs, dir(attrs)
+        #print("startElement", name, attrs, dir(attrs))
         self.endData()
         tag = Tag(name, attrs.items(), self.currentTag, self.previous)
         if self.previous:
@@ -88,12 +88,12 @@ class _BeautifulSaxParser(ContentHandler, Tag):
         self.pushTag(tag)
 
     def endElement(self, name):
-        #print "endElement", name
+        #print("endElement", name)
         self.endData()
         self.popTag(name)
 
     def characters(self, content):
-        #print "characters", content
+        #print("characters", content)
         self.currentData += content
 
     def _checkContents(self, obj, name):
@@ -205,20 +205,20 @@ def SOAPResponseFactory(request, response):
             if isinstance(c, Tag):
                 if len(c.contents) == 1:
                     if out.get(c.name):
-                        print "duplicated %s in response"%(c)
+                        print("duplicated %s in response"%(c))
                     else:
                         out[c.name] = str(c.contents[0])
                 elif not c.contents:
                     out[c.name] = None
                 else:
-                    print "got value for %s with contents %r"%(c.name, c)
+                    print("got value for %s with contents %r"%(c.name, c))
             elif str(c).strip():
-                print "got unexpected %s in response"%(c)
+                print("got unexpected %s in response"%(c))
         return out
     else:
-        print "ick. got non-200 response", response.status
-        print request,response
-        #print bs
+        print("ick. got non-200 response", response.status)
+        print(request,response)
+        #print(bs)
     return response
 
 def SOAPErrorFactory(request, httperror):
@@ -306,16 +306,16 @@ class SCPD:
         for action in self.actions.values():
             inargs = [ x for x in action.arguments if x.direction == 'in' ]
             outargs = [ x for x in action.arguments if x.direction == 'out' ]
-            print
-            print "def %s(%s):"%(action.name,
-                                 ', '.join([x.name for x in inargs]))
-            print '    """'
+            print()
+            print("def %s(%s):"%(action.name,
+                                 ', '.join([x.name for x in inargs])))
+            print('    """')
             if inargs:
-                print "    Argument Types"
+                print("    Argument Types")
             for arglist in (inargs, None, outargs):
                 if arglist is None:
                     if outargs:
-                        print "    Returns:"
+                        print("    Returns:")
                     continue
                 for arg in arglist:
                     rsv = arg.relatedStateVariable
@@ -325,8 +325,8 @@ class SCPD:
                         allowed = "["+allowed+"]"
                     else:
                         allowed = ''
-                    print "        %s(%s) %s"%(arg.name, var.dataType, allowed)
-            print '    """'
+                    print("        %s(%s) %s"%(arg.name, var.dataType, allowed))
+            print('    """')
 
 def parseSCPD(xml):
     scpd = SCPD()

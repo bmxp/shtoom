@@ -22,7 +22,7 @@ class _DeferredCache:
             self.inProgressOnly = inProgressOnly
 
     def cb_triggerUserCallback(self, res, deferred):
-        #print "triggering", deferred
+        #print("triggering", deferred)
         deferred.callback(res)
         return res
 
@@ -53,7 +53,7 @@ class _DeferredCache:
 
     def call(self, *args, **kwargs):
         # Currently not in progress - start it
-        #print "called with", args
+        #print("called with", args)
         cacheVal = self._genCache(args, kwargs)
         if cacheVal is None and self.hashableArgs:
             raise TypeError('DeferredCache(%s) arguments must be hashable'%(

@@ -50,7 +50,7 @@ class TestCall:
                            self.failedIncoming).addErrback(log.err)
 
     def _cb_startFakeOutboundWithAuth(self, auth, uri):
-        print "got auth", auth
+        print("got auth", auth)
         d = self.sip.app.acceptCall(call=self)
         d.addCallbacks(self._cb_incomingCall,
                        self.failedIncoming).addErrback(log.err)
@@ -63,13 +63,13 @@ class TestCall:
             return self.acceptedFakeCall(response)
 
     def failedIncoming(self, failure):
-        print "failed, got %r"%(failure,)
+        print("failed, got %r"%(failure,))
         d, self.d = self.d, None
         d.errback(failure)
         return failure
 
     def acceptedFakeCall(self, cookie):
-        print "accepted, got %r"%(cookie,)
+        print("accepted, got %r"%(cookie,))
         from shtoom.rtp.formats import PT_PCMU, SDPGenerator
         from shtoom.exceptions import CallRejected
         self.cookie = cookie
@@ -79,7 +79,7 @@ class TestCall:
         self.sip.app.startCall(self.cookie, sdp, d.callback)
 
     def rejectedFakeCall(self, response):
-        print "rejected, got %r"%(response,)
+        print("rejected, got %r"%(response,))
         d, self.d = self.d, None
         d.errback(response)
 
@@ -88,16 +88,16 @@ class TestCall:
 
 
     def dropCall(self):
-        print "drop"
+        print("drop")
         if hasattr(self,'cookie'):
             self.sip.app.endCall(self.cookie)
         else:
-            print "'cancelling' non-started call"
+            print("'cancelling' non-started call")
         self.sip.callEndedRestartChecking()
 
 
     def terminateCall(self):
-        print "remote end closed call"
+        print("remote end closed call")
         self.sip.app.endCall(self.cookie)
         self.sip.callEndedRestartChecking()
 
@@ -121,25 +121,25 @@ class TestSip:
             if s.st_mtime > self.lastCall:
                 self.lastCall = time()
                 if hasattr(self, 'c'):
-                    print "'remote' end closing connection"
+                    print("'remote' end closing connection")
                     self.dropFakeInbound('foo')
                 else:
-                    print "new incoming call starting"
+                    print("new incoming call starting")
                     uri = open(self.callFile).readline().strip()
                     d = self.fakeInbound(uri)
                     d.addCallbacks(self._cb_fakeInbound,
                                    self._eb_fakeInbound).addErrback(log.err)
 
     def _cb_fakeInbound(self, response):
-        print "fake inbound call setup OK,",response
+        print("fake inbound call setup OK,",response)
 
     def _eb_fakeInbound(self, failure):
-        print "fake inbound call setup failed,",failure
+        print("fake inbound call setup failed,",failure)
         self.callEndedRestartChecking()
 
     def callEndedRestartChecking(self):
         from twisted.internet import reactor
-        print "restarting callfile checking"
+        print("restarting callfile checking")
         del self.c
         reactor.callLater(5, self.checkForCallFile)
 
@@ -150,7 +150,7 @@ class TestSip:
         return d
 
     def dropCall(self, cookie):
-        print "Sip.dropCall"
+        print("Sip.dropCall")
         self.c.dropCall()
         del self.c
 
@@ -164,7 +164,7 @@ class TestSip:
         return d
 
     def dropFakeInbound(self, result):
-        print "remote bye"
+        print("remote bye")
         self.c.terminateCall()
 
 

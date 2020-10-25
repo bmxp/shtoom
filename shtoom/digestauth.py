@@ -113,5 +113,5 @@ class DigestAuthServer:
         respdig = KD(HA1, noncebit)
         if respdig != resp['response']:
             return False, "response incorrect"
-        print "all ok"
+        print("all ok")
         return True, "OK"

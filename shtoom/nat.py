@@ -32,7 +32,7 @@ class LocalNetworkMulticast(DatagramProtocol, object):
             except CannotListenError:
                 port = 11000 + random.randint(0,5000)
                 attempt += 1
-                print "listenmulticast failed, trying", port
+                print("listenmulticast failed, trying", port)
         if attempt > 5:
             log.msg("warning: couldn't listen ony mcast port", system='network')
             d, self.compDef = self.compDef, None
@@ -59,7 +59,7 @@ class LocalNetworkMulticast(DatagramProtocol, object):
 _cachedLocalIP = None
 def _cacheLocalIP(res):
     global _cachedLocalIP
-    if _Debug: print "caching value", res
+    if _Debug: print("caching value", res)
     _cachedLocalIP = res
     return res
 
@@ -76,7 +76,7 @@ def _getLocalIPAddress():
     if _cachedLocalIP is not None:
         return defer.succeed(_cachedLocalIP)
     # first we try a connected udp socket
-    if _Debug: print "resolving A.ROOT-SERVERS.NET"
+    if _Debug: print("resolving A.ROOT-SERVERS.NET")
     d = reactor.resolve('A.ROOT-SERVERS.NET')
     d.addCallbacks(_getLocalIPAddressViaConnectedUDP, _noDNSerrback)
     return d
@@ -87,7 +87,7 @@ def clearCache():
     "Clear cached NAT settings (e.g. when moving to a different network)"
     from shtoom.upnp import clearCache as uClearCache
     from shtoom.stun import clearCache as sClearCache
-    #print "clearing all NAT caches"
+    #print("clearing all NAT caches")
     getLocalIPAddress.clearCache()
     getMapper.clearCache()
     uClearCache()
@@ -95,13 +95,13 @@ def clearCache():
 
 def _noDNSerrback(failure):
     # No global DNS? What the heck, it's possible, I guess.
-    if _Debug: print "no DNS, trying multicast"
+    if _Debug: print("no DNS, trying multicast")
     return _getLocalIPAddressViaMulticast()
 
 def _getLocalIPAddressViaConnectedUDP(ip):
     from twisted.internet import reactor
     from twisted.internet.protocol import DatagramProtocol
-    if _Debug: print "connecting UDP socket to", ip
+    if _Debug: print("connecting UDP socket to", ip)
     prot = DatagramProtocol()
     p = reactor.listenUDP(0, prot)
     res = prot.transport.connect(ip, 7)
@@ -109,10 +109,10 @@ def _getLocalIPAddressViaConnectedUDP(ip):
     p.stopListening()
     del prot, p
 
-    if _Debug: print "connected UDP socket says", locip
+    if _Debug: print("connected UDP socket says", locip)
     if isBogusAddress(locip):
         # #$#*(&??!@#$!!!
-        if _Debug: print "connected UDP socket gives crack, trying mcast instead"
+        if _Debug: print("connected UDP socket gives crack, trying mcast instead")
         return _getLocalIPAddressViaMulticast()
     else:
         return locip
@@ -127,13 +127,13 @@ def _getLocalIPAddressViaMulticast():
     try:
         IReactorMulticast(reactor)
     except:
-        if _Debug: print "no multicast support in reactor"
+        if _Debug: print("no multicast support in reactor")
         log.msg("warning: no multicast in reactor", system='network')
         return None
     locprot = LocalNetworkMulticast()
-    if _Debug: print "listening to multicast"
+    if _Debug: print("listening to multicast")
     locprot.listenMulticast()
-    if _Debug: print "sending multicast packets"
+    if _Debug: print("sending multicast packets")
     locprot.blatMCast()
     locprot.compDef.addCallback(_cacheLocalIP)
     return locprot.compDef
@@ -192,10 +192,10 @@ def getMapper():
         app = None
     natPref = 'both'
     if app is not None:
-        #print "app is", app
+        #print("app is", app)
         natPref = app.getPref('nat')
         log.msg('NAT preference says to use %s (%s)'%(natPref, app.getPref('nat')), system='nat')
-        #print "NAT pref sez", natPref
+        #print("NAT pref sez", natPref)
     if _forcedMapper is not None:
         return defer.succeed(_forcedMapper)
     from shtoom.upnp import getUPnP
@@ -437,9 +437,9 @@ if __name__ == "__main__":
     log.startLogging(sys.stdout)
 
     def cb_gotip(addr):
-        print "got local IP address of", addr
+        print("got local IP address of", addr)
     def cb_gotnat(res):
-        print "got NAT of", res
+        print("got NAT of", res)
     d1 = getLocalIPAddress().addCallback(cb_gotip)
     d2 = detectNAT().addCallback(cb_gotnat)
     dl = defer.DeferredList([d1,d2])

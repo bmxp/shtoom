@@ -113,7 +113,7 @@ class FileSource(Source):
                 self._fp.write(bytes)
             except:
                 e,v,t = sys.exc_info()
-                print "write failed %s: %r"%(e,v)
+                print("write failed %s: %r"%(e,v))
                 self.leg._sourceDone(self)
 
 def convertToSource(thing, mode='r'):

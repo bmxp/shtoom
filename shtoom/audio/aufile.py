@@ -14,7 +14,7 @@ class BaseReader:
     def __init__(self, fp):
         self.fp = self.module.open(fp, 'rb')
         p = self.fp.getparams()
-        print p
+        print(p)
         if (p[4] not in self.allowedComp):
             raise ValueError("Incorrect file format %r"%(p,))
         self.comptype = p[4]
@@ -29,7 +29,7 @@ class BaseReader:
             raise ValueError("sampfreq must be multiple of 8k")
         self.sampfreq = p[2]
         if p[2] != 8000:
-            print "rate conversion"
+            print("rate conversion")
             self._ratecvt = None
             self._cvt = lambda x,c=self._cvt: self.rateCvt(c(x))
 
@@ -133,7 +133,7 @@ def getdev():
 def test():
     import sys
     if len(sys.argv) == 2:
-        print sndhdr.what(sys.argv[1])
+        print(sndhdr.what(sys.argv[1]))
         inaudio = getReader(sys.argv[1])
         outaudio = getdev()
     elif len(sys.argv) == 3:
@@ -142,9 +142,9 @@ def test():
     while True:
         data = inaudio.read()
         outaudio.write(data)
-        print "len(data)", len(data)
+        print("len(data)", len(data))
         if not len(data):
-            print "stopping because data len == %d"%(len(data))
+            print("stopping because data len == %d"%(len(data)))
             break
 
 

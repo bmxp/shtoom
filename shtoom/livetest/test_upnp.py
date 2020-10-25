@@ -23,36 +23,36 @@ def checkUPnP():
 class TestUPnP:
 
     def discovered(self, prot):
-        #print "upnp discovery done,", prot
+        #print("upnp discovery done,", prot)
         self.prot = prot
         return self.prot.getExternalIPAddress()
 
     def gotexternal(self, res):
-        #print "upnp external address,",res
+        #print("upnp external address,",res)
         return self.prot.getPortMappings()
 
     def gotmappings(self, res):
-        #print "upnp mappings:", res
+        #print("upnp mappings:", res)
         return self.prot.addPortMapping(12367,12367,'test mapping')
 
     def added(self, res):
-        #print "upnp port mapping added"
+        #print("upnp port mapping added")
         return self.prot.getPortMappings()
 
     def gotmappings2(self, res):
-        #print "upnp mappings:", res
+        #print("upnp mappings:", res)
         return self.prot.deletePortMapping(12367)
 
     def deleted(self, res):
-        #print "upnp port mapping removed"
+        #print("upnp port mapping removed")
         return self.prot.getPortMappings()
 
     def gotmappings3(self, res):
-        #print "upnp mappings:", res
+        #print("upnp mappings:", res)
         return self.prot.getExternalIPAddress()
 
     def gotexternal2(self, res):
-        #print "upnp external address,",res
+        #print("upnp external address,",res)
         pass
 
     def go(self):
@@ -79,19 +79,19 @@ class TestMapper:
         self.port = port
         self.mapper = mapper
     def go(self):
-        #print "going"
+        #print("going")
         cd = defer.Deferred()
         d = self.mapper.map(self.port)
         d.addCallback(lambda x: self.cb_mapped(x, cd))
         return cd
     def cb_mapped(self, ext, cd):
-        #print "mapped"
+        #print("mapped")
         self.map_res = ext
         self.info_res = self.mapper.info(self.port)
         d = self.mapper.unmap(self.port)
         d.addCallback(lambda x: self.cb_unmapped(x, cd))
     def cb_unmapped(self, res, cd):
-        #print "unmapped"
+        #print("unmapped")
         self.unmap_res = res
         cd.callback(None)
 

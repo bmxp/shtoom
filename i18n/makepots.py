@@ -23,10 +23,10 @@ def main():
             if os.path.isdir(t):
                 pyfiles.extend(getMatchingFiles(t, '*.py'))
                 break
-    print "found %d python files" %(len(pyfiles))
+    print("found %d python files" %(len(pyfiles)))
     if os.path.isdir(t):
         gladepath = os.path.join(t, 'ui/gnomeui/shtoom.glade')
-    print "found glade file %s"%(gladepath)
+    print("found glade file %s"%(gladepath))
     if os.path.isdir('i18n'):
         outdir = 'i18n'
     else:
@@ -37,7 +37,7 @@ def main():
                                                         ' '.join(pyfiles)))
     os.system('msgcomm --more-than=0 -o %s/shtoom.pot %s/python.pot %s/glade.pot'%(outdir,outdir,outdir))
     pofiles = getMatchingFiles(outdir, '*.po')
-    print "found %d existing po files"%(len(pofiles))
+    print("found %d existing po files"%(len(pofiles)))
     for po in pofiles:
         os.system('msgmerge -U %s shtoom.pot'%(po,))
     os.remove('%s/glade.pot'%(outdir))

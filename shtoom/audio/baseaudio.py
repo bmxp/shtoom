@@ -17,13 +17,13 @@ class AudioDevice(object):
         self.encoder = encoder
 
     def close(self):
-        print "baseaudio CLOSE", self._closed
+        print("baseaudio CLOSE", self._closed)
         if not self._closed:
             self._close()
             self._closed = True
 
     def reopen(self):
-        print "baseaudio REOPEN", self._closed
+        print("baseaudio REOPEN", self._closed)
         if not self._closed:
             self.close()
         self.openDev()

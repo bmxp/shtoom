@@ -120,7 +120,7 @@ class EntryEdit:
         self.surnameentry = self.parent.xml.get_widget("surnameentry")
         self.organizationentry = self.parent.xml.get_widget("organizationentry")
         self.sipentry = self.parent.xml.get_widget("sipentry")
-        print self.entry.isreadonly()
+        print(self.entry.isreadonly())
         if self.entry.isreadonly():
             for entry in (self.nickentry,self.givennameentry,self.surnameentry,
                           self.organizationentry,self.sipentry):

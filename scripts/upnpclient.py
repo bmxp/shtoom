@@ -27,11 +27,11 @@ from shtoom.upnp import getUPnP
 
 def usage():
     import sys
-    print "Usage: %s command [args]"%(sys.argv[0])
-    print "command should be one of:"
-    print "\tlist -- show existing mappings"
-    print "\tadd proto/port -- add a mapping for proto/port (e.g. udp/5060)"
-    print "\tremove proto/port -- remove a mapping for proto/port"
+    print("Usage: %s command [args]"%(sys.argv[0]))
+    print("command should be one of:")
+    print("\tlist -- show existing mappings")
+    print("\tadd proto/port -- add a mapping for proto/port (e.g. udp/5060)")
+    print("\tremove proto/port -- remove a mapping for proto/port")
 
 mappingDesc = "%(NewInternalClient)s:%(NewInternalPort)s [%(NewPortMappingDescription)s]"
 
@@ -40,7 +40,7 @@ def gotList(mappings):
     mappings.sort()
     for prot,port,ddict in mappings:
         desc = mappingDesc%ddict
-        print "%s/%d -> %s"%(prot,port,desc)
+        print("%s/%d -> %s"%(prot,port,desc))
     reactor.stop()
 
 def doList():
@@ -54,10 +54,10 @@ def doneMapping(res):
 
 def gotMappingNowAdd(mappings, nprot, nport, desc):
     if (nprot,nport) in mappings or (nprot,str(nport)) in mappings:
-        print "error: can't replace existing mapping for %s/%s"%(nprot,nport)
+        print("error: can't replace existing mapping for %s/%s"%(nprot,nport))
         ddict = mappings.get((nprot,nport)) or mappings.get((nprot,str(nport)))
         desc = mappingDesc%ddict
-        print "existing mapping is to %s"%desc
+        print("existing mapping is to %s"%desc)
         reactor.stop()
         sys.exit(1)
     d = getUPnP()
@@ -86,7 +86,7 @@ def doAdd(spec, desc):
 
 def gotMappingNowRemove(mappings, nprot, nport):
     if not ((nprot,nport) in mappings or (nprot,str(nport)) in mappings):
-        print "error: no existing mapping for %s/%s"%(nprot,nport)
+        print("error: no existing mapping for %s/%s"%(nprot,nport))
         reactor.stop()
         sys.exit(1)
     d = getUPnP()
@@ -109,7 +109,7 @@ def main():
         usage()
         return
     if sys.argv[1] not in ( 'list', 'add', 'remove' ):
-        print "error: command %s not recognised"%(sys.argv[1])
+        print("error: command %s not recognised"%(sys.argv[1]))
         sys.exit(1)
     cmds = { 'list': doList, 'add': doAdd, 'remove': doRemove }
     reactor.callLater(0, cmds[sys.argv[1]], *sys.argv[2:])

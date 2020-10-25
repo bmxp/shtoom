@@ -175,91 +175,91 @@ class DTMF(QDialog):
 
 
     def pushButton35_released(self):
-        print "DTMF.pushButton35_released(): Not implemented yet"
+        print("DTMF.pushButton35_released(): Not implemented yet")
 
     def pushButton35_pressed(self):
-        print "DTMF.pushButton35_pressed(): Not implemented yet"
+        print("DTMF.pushButton35_pressed(): Not implemented yet")
 
     def dtmfButton1_released(self):
-        print "DTMF.dtmfButton1_released(): Not implemented yet"
+        print("DTMF.dtmfButton1_released(): Not implemented yet")
 
     def dtmfButton1_pressed(self):
-        print "DTMF.dtmfButton1_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton1_pressed(): Not implemented yet")
 
     def dtmfClose_clicked(self):
-        print "DTMF.dtmfClose_clicked(): Not implemented yet"
+        print("DTMF.dtmfClose_clicked(): Not implemented yet")
 
     def dtmfButton1_2_released(self):
-        print "DTMF.dtmfButton1_2_released(): Not implemented yet"
+        print("DTMF.dtmfButton1_2_released(): Not implemented yet")
 
     def dtmfButton1_2_pressed(self):
-        print "DTMF.dtmfButton1_2_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton1_2_pressed(): Not implemented yet")
 
     def dtmfButton2_released(self):
-        print "DTMF.dtmfButton2_released(): Not implemented yet"
+        print("DTMF.dtmfButton2_released(): Not implemented yet")
 
     def dtmfButton2_pressed(self):
-        print "DTMF.dtmfButton2_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton2_pressed(): Not implemented yet")
 
     def dtmfButton3_released(self):
-        print "DTMF.dtmfButton3_released(): Not implemented yet"
+        print("DTMF.dtmfButton3_released(): Not implemented yet")
 
     def dtmfButton3_pressed(self):
-        print "DTMF.dtmfButton3_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton3_pressed(): Not implemented yet")
 
     def dtmfButton4_released(self):
-        print "DTMF.dtmfButton4_released(): Not implemented yet"
+        print("DTMF.dtmfButton4_released(): Not implemented yet")
 
     def dtmfButton4_pressed(self):
-        print "DTMF.dtmfButton4_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton4_pressed(): Not implemented yet")
 
     def dtmfButton5_released(self):
-        print "DTMF.dtmfButton5_released(): Not implemented yet"
+        print("DTMF.dtmfButton5_released(): Not implemented yet")
 
     def dtmfButton5_pressed(self):
-        print "DTMF.dtmfButton5_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton5_pressed(): Not implemented yet")
 
     def dtmfButton6_released(self):
-        print "DTMF.dtmfButton6_released(): Not implemented yet"
+        print("DTMF.dtmfButton6_released(): Not implemented yet")
 
     def dtmfButton6_pressed(self):
-        print "DTMF.dtmfButton6_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton6_pressed(): Not implemented yet")
 
     def dtmfButton7_released(self):
-        print "DTMF.dtmfButton7_released(): Not implemented yet"
+        print("DTMF.dtmfButton7_released(): Not implemented yet")
 
     def dtmfButton7_pressed(self):
-        print "DTMF.dtmfButton7_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton7_pressed(): Not implemented yet")
 
     def dtmfButton8_released(self):
-        print "DTMF.dtmfButton8_released(): Not implemented yet"
+        print("DTMF.dtmfButton8_released(): Not implemented yet")
 
     def dtmfButton8_pressed(self):
-        print "DTMF.dtmfButton8_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton8_pressed(): Not implemented yet")
 
     def dtmfButton9_released(self):
-        print "DTMF.dtmfButton9_released(): Not implemented yet"
+        print("DTMF.dtmfButton9_released(): Not implemented yet")
 
     def dtmfButton9_pressed(self):
-        print "DTMF.dtmfButton9_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton9_pressed(): Not implemented yet")
 
     def dtmfButtonStar_released(self):
-        print "DTMF.dtmfButtonStar_released(): Not implemented yet"
+        print("DTMF.dtmfButtonStar_released(): Not implemented yet")
 
     def dtmfButtonStar_pressed(self):
-        print "DTMF.dtmfButtonStar_pressed(): Not implemented yet"
+        print("DTMF.dtmfButtonStar_pressed(): Not implemented yet")
 
     def dtmfButton0_released(self):
-        print "DTMF.dtmfButton0_released(): Not implemented yet"
+        print("DTMF.dtmfButton0_released(): Not implemented yet")
 
     def dtmfButton0_pressed(self):
-        print "DTMF.dtmfButton0_pressed(): Not implemented yet"
+        print("DTMF.dtmfButton0_pressed(): Not implemented yet")
 
     def dtmfButtonHash_released(self):
-        print "DTMF.dtmfButtonHash_released(): Not implemented yet"
+        print("DTMF.dtmfButtonHash_released(): Not implemented yet")
 
     def dtmfButtonHash_pressed(self):
-        print "DTMF.dtmfButtonHash_pressed(): Not implemented yet"
+        print("DTMF.dtmfButtonHash_pressed(): Not implemented yet")
 
     def __tr(self,s,c = None):
         return qApp.translate("DTMF",s,c)

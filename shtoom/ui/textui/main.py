@@ -17,11 +17,11 @@ class ShtoomMain(basic.LineReceiver, ShtoomBaseUI):
 
     def debugMessage(self, msg):
         if self._debug:
-            print msg
+            print(msg)
 
     def statusMessage(self, msg):
         if self._debug:
-            print "status", msg
+            print("status", msg)
 
     def errorMessage(self, message, exc=None):
         log.msg("error %s"%(message), system='ui')

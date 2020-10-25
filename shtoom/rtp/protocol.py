@@ -197,7 +197,7 @@ class RTPProtocol(DatagramProtocol):
             code1, rtp = rtpres
             code2, rtcp = rtcpres
             if rtp[0] != rtcp[0]:
-                print "stun gave different IPs for rtp and rtcp", results
+                print("stun gave different IPs for rtp and rtcp", results)
             # We _should_ try and see if we have working rtp and rtcp, but
             # this seems almost impossible with most firewalls. So just try
             # to get a working rtp port (an even port number is required).
@@ -208,8 +208,8 @@ class RTPProtocol(DatagramProtocol):
                 # XXX close connection, try again, tell user
                 if self._stunAttempts > 8:
                     # XXX
-                    print "Giving up. Made %d attempts to get a working port"%(
-                        self._stunAttempts)
+                    print("Giving up. Made %d attempts to get a working port"%(
+                        self._stunAttempts))
                 self._stunAttempts += 1
                 defer.maybeDeferred(
                             self.rtpListener.stopListening).addCallback(
@@ -405,7 +405,7 @@ class RTPProtocol(DatagramProtocol):
                 if ntept is not None:
                     self._send_packet(pt=ntept, data=payload)
                 else:
-                    print "no PT_NTE? can't send packet", payload
+                    print("no PT_NTE? can't send packet", payload)
                 if self._pendingDTMF[0].isDone():
                     self._pendingDTMF = self._pendingDTMF[1:]
 

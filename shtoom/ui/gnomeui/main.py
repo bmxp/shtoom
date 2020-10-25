@@ -155,7 +155,7 @@ class ShtoomWindow(ShtoomBaseUI):
         self.hangupButton.set_sensitive(0)
         self.address.set_sensitive(1)
         self.callButton.set_sensitive(1)
-        print "closed: ", reason
+        print("closed: ", reason)
 
     def callStarted(self, cookie):
         self.cookie = cookie

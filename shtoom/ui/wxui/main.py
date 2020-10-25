@@ -233,7 +233,7 @@ class ShtoomMainFrameImpl(ShtoomMainFrame, ShtoomBaseUI):
         self.Show(1)
 
     def debugSize(self):
-        print "size=",self.GetSize()
+        print("size=",self.GetSize())
 
     def OnAdvanced(self, event):
         # Hide the extended interface. Basically the last slot in the

@@ -29,7 +29,7 @@ class PlayingApp(VoiceApp):
         super(PlayingApp, self).__init__(*args, **kwargs)
 
     def __start__(self):
-        print "starting"
+        print("starting")
 
         return ( ( CallStartedEvent, self.makeACall), )
 
@@ -41,7 +41,7 @@ class PlayingApp(VoiceApp):
                )
 
     def unknownEvent(self, event):
-        print "Got unhandled event %s"%event
+        print("Got unhandled event %s"%event)
         return ()
 
     def callAnswered(self, event):
@@ -50,7 +50,7 @@ class PlayingApp(VoiceApp):
         self.leg = leg
         self.leg.hijackLeg(self)
         username = leg.getDialog().getCallee().getURI().username
-        print "voiceapp.__start__ to user %s"%(username)
+        print("voiceapp.__start__ to user %s"%(username))
         self.mediaPlay(self.announceFile)
         return ( (MediaDoneEvent, self.messageDone),
                )

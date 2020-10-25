@@ -235,7 +235,7 @@ class UPnPProtocol(DatagramProtocol, object):
         else:
             log.msg("upnp response showed no WANIPConnections", system='UPnP')
             if DEBUG:
-                print "dump of response", bs
+                print("dump of response", bs)
             return
 
         self.controlURL = urlparse.urljoin(self.urlbase, controlurl)
@@ -501,7 +501,7 @@ if __name__ == "__main__":
 
     log.startLogging(sys.stdout)
     def done(upnp):
-        print "got upnp", upnp
+        print("got upnp", upnp)
         reactor.stop()
     d = getUPnP()
     d.addCallbacks(done, log.err)

@@ -42,13 +42,13 @@ class Leg(object):
         self._startAudio()
 
     def _startAudio(self):
-        #print self, "starting audio"
+        #print(self, "starting audio")
         self.LC = LoopingCall(self._get_some_audio)
         self.LC.start(0.020)
 
     def _stopAudio(self):
         if self.LC is not None:
-            #print self, "stopping audio", self.LC, self.LC.call
+            #print(self, "stopping audio", self.LC, self.LC.call)
             self.LC.stop()
             self.LC = None
 

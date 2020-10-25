@@ -51,7 +51,7 @@ class AudioFromFiles(baseaudio.AudioDevice):
             self._outfp = None
 
     def _close(self):
-        #print "close called", self._closed, self.LC
+        #print("close called", self._closed, self.LC)
         if self._infp is not None:
             self._infp.close()
         if self._outfp is not None:
@@ -64,13 +64,13 @@ class AudioFromFiles(baseaudio.AudioDevice):
     def openDev(self):
         from shtoom.util import stack
         self._getFiles()
-        #print "openDev called!", self._closed, self.LC, stack()
+        #print("openDev called!", self._closed, self.LC, stack())
         if self.LC is not None:
             return
         if self._infp is None and self._outfp is None:
             self._getFiles()
         self.LC = LoopingCall(self._push_up_some_data)
-        #print self, "creating LoopingCall", self.LC, stack()
+        #print(self, "creating LoopingCall", self.LC, stack())
         self.LC.start(0.020)
 
 

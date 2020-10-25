@@ -214,7 +214,7 @@ class SimpleSDP:
             # Damnit. Handle Cisco CN on PT 19!
             if d1.has_key(rtpmap2canonical(code,e)):
                 outmap.append((code,e))
-        print map1, map2, outmap
+        print(map1, map2, outmap)
         self.rtpmap = outmap
 
 def ntp2delta(ticks):

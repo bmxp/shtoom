@@ -96,7 +96,7 @@ class AuthDialog(Popup):
         return (self.uentry.get(), self.pentry.get(), self._saveOK)
 
     def body(self):
-        print "auth body"
+        print("auth body")
         from Tkinter import NW, E, W, Frame, Label, Button, Entry, Checkbutton
         defargs = { 'padx':5, 'pady':5, 'sticky':W }
 
@@ -167,18 +167,18 @@ class MovingDialog(Dialog):
             self._x, self._y = self.winfo_width(), self.winfo_height()
             self._fx = self._sx - self._x - self.finalOffset
             self._fy = self._sy - self._y - self.finalOffset
-            print "final",(self._fx, self._fy)
+            print("final",(self._fx, self._fy))
             newx = self._sx
             newy = self._fy
         else:
             x, y = self.winfo_rootx(), self.winfo_rooty()
             newx, newy = x - 2, y
-        print "window/geom", (self._x, self._y),(x,y)
+        print("window/geom", (self._x, self._y),(x,y))
         if newx < self._fx:
             newx = self._fx
         self.geometry("+%d+%d" % (newx, newy))
         if newx > self._fx:
-            print "move",(newx, newy), (self._fx, self._fy)
+            print("move",(newx, newy), (self._fx, self._fy))
             reactor.callLater(0.02, self._moveWindow)
 
 
@@ -199,7 +199,7 @@ if __name__ == "__main__":
         tksupport.install(main)
 
     def optionClicked(option):
-        print "got option", option
+        print("got option", option)
         reactor.stop()
 
     def popupWindow():
@@ -209,17 +209,17 @@ if __name__ == "__main__":
         d.addCallback(optionClicked)
 
     def oops(failure):
-        print "arg", failure
+        print("arg", failure)
 
     def popupAuth():
-        print "popup"
+        print("popup")
         d = defer.Deferred()
         popup = AuthDialog(main, d, 'INVITE', 'fwd.pulver.com')
         d.addCallback(optionClicked)
         d.addErrback(oops)
 
     def ping():
-        print "ping"
+        print("ping")
 
     p = LoopingCall(ping)
     p.start(0.5)

@@ -13,14 +13,14 @@ else:
 import shtoom.dbus
 
 def gotsignal(*args):
-    print "client: got a signal", args
+    print("client: got a signal", args)
 
 def start(args):
     bus = shtoom.dbus.SessionBus()
     remote_object = bus.get_object("net.shtoom.ShtoomPhone", "/ShtoomPhone")
     #remote_object.connect_to_signal('hello', gotsignal, interface='net.shtoom.ShtoomPhone')
     def cb(result):
-        print "shtoomclient: returned", result
+        print("shtoomclient: returned", result)
         reactor.stop()
     if args[0].startswith('sip:'):
         d = remote_object.call(args[0],
@@ -29,7 +29,7 @@ def start(args):
         d = remote_object.hangup(None,
                             dbus_interface = "net.shtoom.ShtoomPhone")
     else:
-        print "unknown argument %s"%(args[0])
+        print("unknown argument %s"%(args[0]))
         reactor.stop()
     d.addCallback(cb)
 

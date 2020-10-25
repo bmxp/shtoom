@@ -133,7 +133,7 @@ class Room:
     def addMember(self, confsource):
         self._members.add(confsource)
         if CONFDEBUG:
-            print "added", confsource, "to room", self
+            print("added", confsource, "to room", self)
         if not self._open:
             self.start()
 
@@ -141,12 +141,12 @@ class Room:
         if len(self._members) and confsource in self._members:
             self._members.remove(confsource)
             if CONFDEBUG:
-                print "removed", confsource, "from", self
+                print("removed", confsource, "from", self)
         else:
             raise ConferenceMemberNotFoundError(confsource)
         if not len(self._members):
             if CONFDEBUG:
-                print "No members left, shutting down"
+                print("No members left, shutting down")
             self.shutdown()
 
     def isMember(self, confsource):
@@ -179,13 +179,13 @@ class Room:
             bytes = m.getAudioForRoom()
             if bytes: audioIn[m] = bytes
         if CONFDEBUG:
-            print "room %r has %d members"%(self, len(self._members))
-            print "got %d samples this time"%len(audioIn)
-            print "samples: %r"%(audioIn.items(),)
+            print("room %r has %d members"%(self, len(self._members)))
+            print("got %d samples this time"%len(audioIn))
+            print("samples: %r"%(audioIn.items(),))
         # short-circuit this case
         if len(self._members) < 2:
             if CONFDEBUG:
-                print "less than 2 members, no sound"
+                print("less than 2 members, no sound")
             self._audioOutDefault = ''
             return
         # Samples is (confsource, audio)
@@ -195,7 +195,7 @@ class Room:
         power.sort(); power.reverse()
         if CONFDEBUG:
             for rms,audio,confsource in power:
-                print confsource, rms
+                print(confsource, rms)
         # Speakers is a list of the _maxSpeakers loudest speakers
         speakers = Set([x[2] for x in power[:self._maxSpeakers]])
         # First we calculate the 'default' audio. Used for everyone who's
@@ -208,8 +208,8 @@ class Room:
                 combined = reduce(lambda x,y: audioop.add(x, y, 2), scaledsamples)
             except audioop.error, exc:
                 # XXX tofix!
-                print "combine got error %s"%(exc,)
-                print "lengths", [len(x) for x in scaledsamples]
+                print("combine got error %s"%(exc,))
+                print("lengths", [len(x) for x in scaledsamples])
                 combined = ''
         else:
             combined = ''
@@ -233,13 +233,13 @@ class Room:
                     out = reduce(lambda x,y: audioop.add(x, y, 2), scaled)
                 except audioop.error, exc:
                     # XXX tofix!
-                    print "combine got error %s"%(exc,)
-                    print "lengths", [len(x) for x in scaled]
+                    print("combine got error %s"%(exc,))
+                    print("lengths", [len(x) for x in scaled])
                     out = ''
             else:
                 out = ''
             if CONFDEBUG:
-                print "calc for", s, "is", audioop.rms(out, 2)
+                print("calc for", s, "is", audioop.rms(out, 2))
             self._audioOut[s] = out
 
 _RegisterOfAllRooms = {}

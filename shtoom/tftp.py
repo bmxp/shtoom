@@ -38,8 +38,8 @@ for k,v in TftpOpcodes.items():
     TftpOpcodes[v] = k
 del k, v
 
-print TftpOpcodes
-print TftpOpcodes[3]
+print(TftpOpcodes)
+print(TftpOpcodes[3])
 
 class TftpProtocol(DatagramProtocol, object):
 
@@ -50,11 +50,11 @@ class TftpProtocol(DatagramProtocol, object):
         opcode, = struct.unpack('!h', dgram[:2])
         opcode = TftpOpcodes.get(opcode,'UNKNOWN(%d)'%opcode)
         rhost,rport = address
-        print "got opcode %s from %s:%s"%(opcode, rhost, rport)
+        print("got opcode %s from %s:%s"%(opcode, rhost, rport))
         if opcode == 'DATA':
             block, = struct.unpack('!h', dgram[2:4])
             if block != self.blockcount:
-                print "error, expecting block %d, got %d"%(self.blockcount,block)
+                print("error, expecting block %d, got %d"%(self.blockcount,block))
                 return
             else:
                 data = dgram[4:]
@@ -98,12 +98,12 @@ class TftpProtocol(DatagramProtocol, object):
         self.transport.write(dgram, (remotehost, 69))
 
 def testdone(r):
-    print "test done, got", r
+    print("test done, got", r)
     reactor.stop()
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print "usage: %s host:path/to/file outfile"
+        print("usage: %s host:path/to/file outfile")
         sys.exit(0)
     tftpClient = TftpProtocol()
     log.startLogging(sys.stdout)

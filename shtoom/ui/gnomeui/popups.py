@@ -91,11 +91,11 @@ class PopupNotice:
 
 def done(*args):
     from twisted.internet import reactor
-    print "third dialog got %s"%(args,)
+    print("third dialog got %s"%(args,))
     reactor.stop()
 
 def testrun3(*args):
-    print "second dialog got %s"%(args,)
+    print("second dialog got %s"%(args,))
     p = PopupNotice()
     d = p.popup('this is a notice\nwith three buttons',
                                 buttons=('Yes','No','Maybe'))
@@ -103,7 +103,7 @@ def testrun3(*args):
     d.addCallback(done)
 
 def testrun2(*args):
-    print "first dialog got %s"%(args,)
+    print("first dialog got %s"%(args,))
     p = PopupNotice()
     d = p.popup('this is a notice with two buttons\n(and no timeout)',
                     buttons=('Yes','No'), timeout = 0)

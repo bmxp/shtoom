@@ -40,7 +40,7 @@ class MessageApp(VoiceApp):
     # are (event, handler). Note that the events are in a hierarchy,
     # rooted at Event.
     def __start__(self):
-        print "ANNOUNCING", self.announceFile
+        print("ANNOUNCING", self.announceFile)
         # When a call starts, call the 'answerCall' method.
         return ( (CallStartedEvent, self.answerCall),
                )

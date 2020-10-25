@@ -107,15 +107,15 @@ class Phone(BaseApplication):
                 if isAvailable():
                     from shtoom.ipc import dbus
                     self.remote = dbus.start(app='phone')
-                    print "installed DBus", self.remote
+                    print("installed DBus", self.remote)
                 else:
                     log.msg('dbus IPC not available', system='phone')
-                    print "no DBus available"
+                    print("no DBus available")
             elif self.getPref('ipc') == 'pb':
                 log.msg('pb IPC not implemented yet, sorry', system='phone')
             else:
                 log.msg('no IPC', system='phone')
-        print "done"
+        print("done")
 
     def start(self):
         "Start the application."
@@ -323,7 +323,7 @@ class Phone(BaseApplication):
         user = self.getPref('register_authuser')
         passwd = self.getPref('register_authpasswd')
         cachedcreds = self.creds.getCred(realm)
-        print "checking for cached creds for %s: %r (retry %s)"%(realm, cachedcreds, retry)
+        print("checking for cached creds for %s: %r (retry %s)"%(realm, cachedcreds, retry))
         if user is not None and passwd is not None and retry is False:
             # for upgrades of people using the old option.
             if not self.creds.getCred(realm):

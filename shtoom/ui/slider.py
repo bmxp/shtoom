@@ -104,7 +104,7 @@ def updatepos(cur, delta, final):
         if new != final:
             if abs(new-final) < 3:
                 # mmm fuzz factor
-                if _Debug: print "fuzzing %d to %d"%(new, final)
+                if _Debug: print("fuzzing %d to %d"%(new, final))
                 return final
             else:
                 raise ValueError('asked to not move %d to %d'%(cur, final))
@@ -155,7 +155,7 @@ class Slider:
         from twisted.internet import reactor
         sx, sy = self.win.getScreenSize()
         wx, wy = self.winX, self.winY
-        if _Debug: print "window is", wx, wy
+        if _Debug: print("window is", wx, wy)
         dx, dy = delta[direction]
         showx, showy = endPosition[direction]((sx,sy),(wx,wy),self.offset)
         hidex = showx + (-dx * (wx+self.offset))
@@ -172,15 +172,15 @@ class Slider:
             endx, endy = hidex, hidey
             dx, dy = -dx, -dy
 
-        if _Debug: print "show/hide", (showx,showy),(hidex,hidey)
-        if _Debug: print "Moving from", (startx,starty), "to", (endx,endy)
+        if _Debug: print("show/hide", (showx,showy),(hidex,hidey))
+        if _Debug: print("Moving from", (startx,starty), "to", (endx,endy))
         dx = dx * (distance/steps)
         dy = dy * (distance/steps)
-        if _Debug: print "distance", distance, "in", steps, "deltas", (dx,dy)
+        if _Debug: print("distance", distance, "in", steps, "deltas", (dx,dy))
         if show:
-            if _Debug: print "jumping to",(startx, startx)
+            if _Debug: print("jumping to",(startx, startx))
             self.win.movePosition((int(startx), int(starty)))
-        if _Debug: print "jumped to",(startx, starty)
+        if _Debug: print("jumped to",(startx, starty))
         self._cl = self.win.callLater(self.stepTime,
             self._moveTo, (startx,starty), (dx,dy), (endx,endy), show)
 
@@ -196,7 +196,7 @@ class Slider:
             else:
                 self.win.windowHidden()
             if _Debug:
-                print "done with this one"
+                print("done with this one")
         else:
             self._cl = self.win.callLater(self.stepTime,
                     self._moveTo, (nx,ny), (dx,dy), (fx,fy), show)

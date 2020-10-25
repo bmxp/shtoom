@@ -105,7 +105,7 @@ class DtmfDetector:
         try:
             peakvals = zip(fft[1:-1].take(peaks)[0], peaks[0])
         except:
-            print "pppp", peaks
+            print("pppp", peaks)
             raise
         peakvals.sort(); peakvals.reverse()
         if len(peakvals) > 2:
@@ -147,9 +147,9 @@ def dtmfGenerator(key, duration=160):
 def test():
     import sys
     if len(sys.argv) != 2:
-        print "usage: dtmfdetect.py <file>"
-        print "file should be 8KHz raw 16 bit signed samples"
-        print "use sox infile.au -s -w testfile.raw to make this"
+        print("usage: dtmfdetect.py <file>")
+        print("file should be 8KHz raw 16 bit signed samples")
+        print("use sox infile.au -s -w testfile.raw to make this")
         sys.exit(1)
     audio = open(sys.argv[1], 'r')
     D = DtmfDetector()
@@ -169,12 +169,12 @@ def test():
         prev = samp
         if digit != old:
             if old == '':
-                print "%.3fs: %s ON"%(offs, digit)
+                print("%.3fs: %s ON"%(offs, digit))
             elif digit == '':
-                print "%.3fs: %s OFF"%(offs, old)
+                print("%.3fs: %s OFF"%(offs, old))
             else:
-                print "%.3fs: %s OFF"%(offs, old)
-                print "%.3fs: %s ON"%(offs, digit)
+                print("%.3fs: %s OFF"%(offs, old))
+                print("%.3fs: %s ON"%(offs, digit))
             old = digit
         offs = offs + (320.0/HZ)
 

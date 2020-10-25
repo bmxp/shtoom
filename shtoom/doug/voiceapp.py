@@ -107,7 +107,7 @@ class VoiceApp(StateMachine):
 
     def _clear_legs(self):
         from shtoom.util import stack
-        #print self, "clearing running legs %r"%(self.__legs.items())#,stack(8)
+        #print(self, "clearing running legs %r"%(self.__legs.items())#,stack(8))
         for name, leg in self.__legs.items():
             leg._stopAudio()
             del self.__legs[name]

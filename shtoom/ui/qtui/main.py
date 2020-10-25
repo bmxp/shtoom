@@ -36,9 +36,9 @@ class AuthDialog(ShtoomAuthDialog):
         msg = msg % {'method':method, 'realm':realm }
         self.realmLabel.setText(msg)
         self.d = defer.Deferred()
-        print "deferred is", self.d
+        print("deferred is", self.d)
         self.show()
-        print "showed!"
+        print("showed!")
         return self.d
 
     def userEntry_returnPressed(self):
@@ -175,7 +175,7 @@ class ShtoomMainWindow(ShtoomBaseWindow, ShtoomBaseUI):
         ShtoomBaseWindow.__init__(self, *args, **kwargs)
 
     def debugMessage(self, message):
-        print message
+        print(message)
         log.msg(message, system='ui')
 
     def statusMessage(self, message):
@@ -205,7 +205,7 @@ class ShtoomMainWindow(ShtoomBaseWindow, ShtoomBaseUI):
         defer.addCallbacks(self.callConnected, self.callFailed).addErrback(log.err)
 
     def callStarted(self, cookie):
-        print "started", cookie
+        print("started", cookie)
         self.cookie = cookie
         self.hangupButton.setEnabled(True)
         self.statusMessage(_('Calling...'))
@@ -252,7 +252,7 @@ class ShtoomMainWindow(ShtoomBaseWindow, ShtoomBaseUI):
         accept = QMessageBox.information(self, 'Shtoom',
                 'Incoming Call: %s\nAnswer?'%description,
                 'Yes', 'No', '', 0, 1)
-        print "accept is", accept
+        print("accept is", accept)
         if accept == 0:
             self.cookie = cookie
             self.callButton.setEnabled(False)

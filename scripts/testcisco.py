@@ -41,7 +41,7 @@ class PlayingApp(VoiceApp):
 
     def __start__(self):
         self.where = 'start'
-        print "starting call to", self.callURL
+        print("starting call to", self.callURL)
         self.setTimer(45)
         return ( ( CallStartedEvent, self.makeACall), )
 
@@ -58,7 +58,7 @@ class PlayingApp(VoiceApp):
 
     def unknownEvent(self, event):
         self.where = 'unknown'
-        print "Got unhandled event %s"%event
+        print("Got unhandled event %s"%event)
         return self.callFailed(event)
 
     def callAnswered(self, event):
@@ -69,7 +69,7 @@ class PlayingApp(VoiceApp):
         self.leg = leg
         self.leg.hijackLeg(self)
         username = leg.getDialog().getCallee().getURI().username
-        print "voiceapp.__start__ to user %s"%(username)
+        print("voiceapp.__start__ to user %s"%(username))
         if self.saveFile is not None:
             self.leg.mediaRecord(self.saveFile)
         return ( (MediaDoneEvent, self.messageDone),
@@ -81,11 +81,11 @@ class PlayingApp(VoiceApp):
     def dtmfEnterAccount(self, event):
         self.where = 'enter account'
         if event.digits == '7':
-            print "got login!"
+            print("got login!")
             self.leg.sendDTMF(self.account+'#')
             self.timestats.append(time.time())
         else:
-            print "got unknown event", event.digits
+            print("got unknown event", event.digits)
             self.callFailed(event)
         return ( (MediaDoneEvent, self.messageDone),
                  (DTMFReceivedEvent, self.dtmfEnterPin),
@@ -95,9 +95,9 @@ class PlayingApp(VoiceApp):
 
     def dtmfEnterPin(self, event):
         self.where = 'enter pin'
-        print "got pin!"
+        print("got pin!")
         if event.digits == '2':
-            print "account ok!"
+            print("account ok!")
             self.leg.sendDTMF(self.pin+'#')
             self.timestats.append(time.time())
             return ( (MediaDoneEvent, self.messageDone),
@@ -106,16 +106,16 @@ class PlayingApp(VoiceApp):
                      (CallEndedEvent, self.callFailed),
                    )
         elif event.digits == '9':
-            print "account nak!"
+            print("account nak!")
             self.callFailed(event)
         else:
-            print "unknown result", event.digits
+            print("unknown result", event.digits)
             self.callFailed(event)
 
     def dtmfMainMenu(self, event):
         self.where = 'main menu'
         if event.digits == '4':
-            print "pin ok!"
+            print("pin ok!")
             self.leg.sendDTMF('9')
             self.timestats.append(time.time())
             self.leg.hangupCall()
@@ -124,7 +124,7 @@ class PlayingApp(VoiceApp):
                      (TimeoutEvent, self.callTimedOut),
                      (CallEndedEvent, self.doneDoneAndDone),
                    )
-            #print "dialling"
+            #print("dialling")
             #self.leg.sendDTMF('2,,,,12138672411#')
             #return ( (MediaDoneEvent, self.messageDone),
             #         (DTMFReceivedEvent, self.dtmfVoicemailLogin),
@@ -132,14 +132,14 @@ class PlayingApp(VoiceApp):
             #         (CallEndedEvent, self.callFailed),
             #       )
         elif event.digits == '0':
-            print "account nak!"
+            print("account nak!")
             self.callFailed(event)
         else:
-            print "unknown result", event.digits
+            print("unknown result", event.digits)
 
     def dtmfVoicemailLogin(self, event):
         self.where = 'voicemail'
-        print "voicemail login", event.digits
+        print("voicemail login", event.digits)
         self.leg.hangupCall()
         self.doneDoneAndDone(None)
         return ( (CallEndedEvent, self.callFailed), )

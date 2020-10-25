@@ -98,8 +98,8 @@ class StateMachine(object):
                 if isinstance(em, defer.Deferred):
                     self._deferredState = em
                     return em.addCallback(self._cb_doState)
-                print "%s did not return a new state mapping, but %r"%(
-                                                self._curState, em)
+                print("%s did not return a new state mapping, but %r"%(
+                                                self._curState, em))
                 em = self._curEvents
         self._curEvents = em
 

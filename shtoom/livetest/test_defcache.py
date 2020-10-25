@@ -35,7 +35,7 @@ class Saver:
         self.val = None
 
     def save(self, arg):
-        #print "Saver", self, "called with", arg
+        #print("Saver", self, "called with", arg)
         self.val = arg
 
 

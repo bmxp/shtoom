@@ -16,7 +16,7 @@ class GtkSlidingWindow:
         return self.win.get_position()
 
     def movePosition(self, (x, y)):
-        print "moving to", x, y
+        print("moving to", x, y)
         self.win.move(x, y)
         self.win.show_all()
 
@@ -58,7 +58,7 @@ def demo():
             vbox.pack_start(hbox, expand=False)
             self.win.add(self.frame)
             self.win.resize(200, 150)
-            print "done", self.win
+            print("done", self.win)
             self.win.show()
 
         def demoText(self, text):

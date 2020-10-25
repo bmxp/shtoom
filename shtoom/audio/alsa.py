@@ -24,7 +24,7 @@ class ALSAAudioDevice(baseaudio.AudioDevice):
         return "ALSAAudioDevice %s" % (self.isOpen() and "open" or "closed")
 
     def openDev(self):
-        print "alsa OPEN", self._closed
+        print("alsa OPEN", self._closed)
         try:
             from __main__ import app
         except:
@@ -52,7 +52,7 @@ class ALSAAudioDevice(baseaudio.AudioDevice):
 
         self.LC = LoopingCall(self._push_up_some_data)
         self.LC.start(0.010)
-        print "alsa OPENED", self._closed
+        print("alsa OPENED", self._closed)
 
     def _push_up_some_data(self):
         if self.readdev is None:
@@ -73,7 +73,7 @@ class ALSAAudioDevice(baseaudio.AudioDevice):
         if not wrote: log.msg("ALSA overrun")
 
     def _close(self):
-        print "alsa CLOSE", self._closed
+        print("alsa CLOSE", self._closed)
         if self.isOpen():
             log.msg("alsaaudiodev closing")
             try:
@@ -84,6 +84,6 @@ class ALSAAudioDevice(baseaudio.AudioDevice):
             del self.LC
             self.writedev = None
             self.readdev = None
-        print "alsa CLOSED", self._closed
+        print("alsa CLOSED", self._closed)
 
 Device = ALSAAudioDevice

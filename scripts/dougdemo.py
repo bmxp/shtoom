@@ -40,7 +40,7 @@ class MessageApp(VoiceApp):
     # are (event, handler). Note that the events are in a hierarchy,
     # rooted at Event.
     def __start__(self):
-        print "ANNOUNCING", self.announceFile
+        print("ANNOUNCING", self.announceFile)
         # When a call starts, call the 'answerCall' method.
         return ( (CallStartedEvent, self.answerCall),
                )
@@ -100,12 +100,12 @@ class MessageApp(VoiceApp):
     def callAnswered(self, event):
         inleg = self.getDefaultLeg()
         outleg = event.getLeg()
-        print "bridging legs", inleg, outleg
+        print("bridging legs", inleg, outleg)
         b = self.connectLegs(inleg, outleg)
-        print "bridged with", b
+        print("bridged with", b)
 
     def outboundEnded(self, event):
-        print "got event", event
+        print("got event", event)
         self.endCall(event)
 
     def endCall(self, event):

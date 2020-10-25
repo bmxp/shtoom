@@ -43,26 +43,26 @@ class OSXAudio(object):
         self.prevtime = time()
         if len(self.outbuffer) < (buffer + bytes):
             #if self.counter % 20 == 0:
-                #print "silence, because %d < %d"%(len(self.outbuffer), buffer+bytes)
+                #print("silence, because %d < %d"%(len(self.outbuffer), buffer+bytes))
             return ''
         else:
             sound, self.outbuffer = self.outbuffer[:bytes], self.outbuffer[bytes:]
         return sound
 
     def write(self, data):
-        #print "got %d bytes from network"%(len(data))
+        #print("got %d bytes from network"%(len(data)))
         out = self.to44KStereo(data)
         self.inbuffer += out
 
     def reopen(self):
         if not self.running:
-            print "Installing coreaudio callback"
+            print("Installing coreaudio callback")
             coreaudio.installAudioCallback(self)
             self.running = True
 
     def _close(self):
         if self.running:
-            print "uninstalling coreaudio callback"
+            print("uninstalling coreaudio callback")
             coreaudio.stopAudio(self)
             self.outbuffer = ''
             self.running = False
@@ -89,7 +89,7 @@ class OSXAudio(object):
 
     def fromPCMString(self, buffer):
         from numarray import fromstring, Int16, Float32
-        #print "buffer", len(buffer)
+        #print("buffer", len(buffer))
         b = fromstring(buffer, Int16)
         b = b.astype(Float32)
         b = ( b + 32768/2 ) / self.SCALE
@@ -123,7 +123,7 @@ class OSXAudio(object):
     def callback(self, buffer):
         self.counter += 1
         #if self.counter % 20 == 0:
-            #print "callback #%d"%(self.counter)
+            #print("callback #%d"%(self.counter))
         try:
             self.storeSamples(buffer)
             out = self.getSamples()
@@ -135,7 +135,7 @@ class OSXAudio(object):
                 return
         except:
             e,v,t = sys.exc_info()
-            print e, v
+            print(e, v)
             traceback.print_tb(t)
         return
 

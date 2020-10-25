@@ -26,11 +26,11 @@ text = '''<html>
 </html>'''
 soup = BeautifulSoup()
 soup.feed(text)
-print soup("a") #Returns a list of 2 Tag objects, one for each link in
-                #the source
-print soup.first("a", {'class':'foo'})['href'] #Returns http://www.crummy.com/
-print soup.first("title").contents[0] #Returns "The title"
-print soup.first("a", {'href':'http://www.crummy.com/'}).first("i").contents[0]
+print(soup("a")) #Returns a list of 2 Tag objects, one for each link in
+                 #the source
+print(soup.first("a", {'class':'foo'})['href']) #Returns http://www.crummy.com/
+print(soup.first("title").contents[0])          #Returns "The title"
+print(soup.first("a", {'href':'http://www.crummy.com/'}).first("i").contents[0])
 #Returns "text (italicized)"
 
 #Example of SQL-style attribute wildcards -- all four 'find' calls will
@@ -38,10 +38,10 @@ print soup.first("a", {'href':'http://www.crummy.com/'}).first("i").contents[0]
 #----------------------------------------------------------------------
 soup = BeautifulSoup()
 soup.feed('''<a href="http://foo.com/">bla</a>''')
-print soup.fetch('a', {'href': 'http://foo.com/'})
-print soup.fetch('a', {'href': 'http://%'})
-print soup.fetch('a', {'href': '%.com/'})
-print soup.fetch('a', {'href': '%o.c%'})
+print(soup.fetch('a', {'href': 'http://foo.com/'}))
+print(soup.fetch('a', {'href': 'http://%'}))
+print(soup.fetch('a', {'href': '%.com/'}))
+print(soup.fetch('a', {'href': '%o.c%'}))
 
 #Example with horrible HTML:
 #---------------------------
@@ -50,9 +50,9 @@ soup.feed('''<body>
 Go <a class="that" href="here.html"><i>here</i></a>
 or <i>go <b><a href="index.html">Home</a>
 </html>''')
-print soup.fetch('a') #Returns a list of 2 Tag objects.
-print soup.first(attrs={'href': 'here.html'})['class'] #Returns "that"
-print soup.first(attrs={'class': 'that'}).first('i').contents[0] #returns "here"
+print(soup.fetch('a')) #Returns a list of 2 Tag objects.
+print(soup.first(attrs={'href': 'here.html'})['class']) #Returns "that"
+print(soup.first(attrs={'class': 'that'}).first('i').contents[0]) #returns "here"
 
 This library has no external dependencies. It works with Python 1.5.2
 and up. If you can install a Python extension, you might want to use
@@ -261,13 +261,13 @@ class BeautifulSoup(SGMLParser, Tag):
 
     def popTag(self):
         tag = self.tagStack.pop()
-        #print "Pop", tag.name, ' '.join([x.name for x in self.tagStack])
-        #if tag.name ==  'hr': print "XXX"
+        #print("Pop", tag.name, ' '.join([x.name for x in self.tagStack]))
+        #if tag.name ==  'hr': print("XXX")
         self.currentTag = self.tagStack[-1]
         return self.currentTag
 
     def pushTag(self, tag):
-        #print "Push", tag.name, ' '.join([x.name for x in self.tagStack])
+        #print("Push", tag.name, ' '.join([x.name for x in self.tagStack]))
         if self.currentTag:
             self.currentTag.append(tag)
         self.tagStack.append(tag)
@@ -303,7 +303,7 @@ class BeautifulSoup(SGMLParser, Tag):
     def unknown_starttag(self, name, attrs):
         if self.quoteStack:
             #This is not a real tag.
-            #print "<%s> is not real!" % name
+            #print("<%s> is not real!" % name)
             attrs = map(lambda(x, y): '%s="%s"' % (x, y), attrs)
             self.handle_data('<%s %s>' % (name, attrs))
             return
@@ -318,19 +318,19 @@ class BeautifulSoup(SGMLParser, Tag):
         if name in self.SELF_CLOSING_TAGS:
             self.popTag()
         if name in self.QUOTE_TAGS:
-            #print "Beginning quote (%s)" % name
+            #print("Beginning quote (%s)" % name)
             self.quoteStack.append(name)
 
     def unknown_endtag(self, name):
         if self.quoteStack and self.quoteStack[-1] != name:
             #This is not a real end tag.
-            #print "</%s> is not real!" % name
+            #print("</%s> is not real!" % name)
             self.handle_data('</%s>' % name)
             return
         self.endData()
         self._pop_to_tag(name)
         if self.quoteStack and self.quoteStack[-1] == name:
-            #print "That's the end of %s!" % self.quoteStack[-1]
+            #print("That's the end of %s!" % self.quoteStack[-1])
             self.quoteStack.pop()
 
     def handle_data(self, data):

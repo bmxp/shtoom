@@ -14,8 +14,8 @@ from shtoom.livetest.test_upnp import checkUPnP
 import random
 
 def logerr(failure):
-    print "logerr", failure
-    print failure.value
+    print("logerr", failure)
+    print(failure.value)
     return failure
 
 class TestMapper:
@@ -24,21 +24,21 @@ class TestMapper:
         self.mapper = mapper
 
     def go(self):
-        #print "going"
+        #print("going")
         cd = defer.Deferred()
         d = self.mapper.map(self.port)
         d.addCallback(lambda x: self.cb_mapped(x, cd)).addErrback(logerr)
         return cd
 
     def cb_mapped(self, ext, cd):
-        #print "mapped"
+        #print("mapped")
         self.map_res = ext
         self.info_res = self.mapper.info(self.port)
         d = self.mapper.unmap(self.port)
         d.addCallback(lambda x: self.cb_unmapped(x, cd))
 
     def cb_unmapped(self, res, cd):
-        #print "unmapped"
+        #print("unmapped")
         self.unmap_res = res
         cd.callback(None)
 

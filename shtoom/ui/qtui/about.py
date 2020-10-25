@@ -157,7 +157,7 @@ class AboutDialog(QDialog):
 
 
     def closeButton_pressed(self):
-        print "AboutDialog.closeButton_pressed(): Not implemented yet"
+        print("AboutDialog.closeButton_pressed(): Not implemented yet")
 
     def __tr(self,s,c = None):
         return qApp.translate("AboutDialog",s,c)

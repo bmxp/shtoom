@@ -1,0 +1,48 @@
+*.pyc
+*.jar
+*.tgz
+*.zip
+
+# Logs
+*.log
+
+# Unittest and coverage reports
+.cache
+.coverage
+.tox
+nosetests.xml
+*.egg-info
+test.cache
+/.pytest_cache
+
+# OSX specific files
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Don't check in built documentation
+/doc/user/build
+/doc/user/source/plugins_doc
+/doc/developer/build
+/doc/developer/source/plugins_doc
+
+# Don't check in plugins to core repository
+/plugins/
+
+# don't check in requirements that are built each time SHNG starts
+requirements/all.txt
+requirements/base.txt
+requirements/conf_all.txt
+
+/build/
+
+# ignore users tools settings
+/.idea
+**/.vscode/
+

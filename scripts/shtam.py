@@ -35,13 +35,13 @@ class VoicemailApp(VoiceApp):
     draftDir = '/tmp'
 
     def __start__(self):
-        print "voiceapp.__start__"
+        print("voiceapp.__start__")
         return ( (CallStartedEvent, self.answerCall),
                  #(Event,            self.unknownEvent),
                )
 
     def unknownEvent(self, event):
-        print "Got unhandled event %s"%event
+        print("Got unhandled event %s"%event)
         return ()
 
     def checkUser(self, username):
@@ -65,7 +65,7 @@ class VoicemailApp(VoiceApp):
             d = self.destination = user.replace('+','@')
         else:
             d = self.destination = '%s@%s'%(user, host)
-        print "voiceapp.__start__ to user %s"%(d)
+        print("voiceapp.__start__ to user %s"%(d))
         if not self.checkUser(d):
             self.leg.rejectCall(CallRejected("won't accept voicemail for %s"%d))
             return
@@ -127,7 +127,7 @@ def sendVoicemail(dest, sender, draftfile):
     from email.Message import Message
     infp = open(draftfile,'rb')
     draft = encodeAudio(infp, dest)
-    print "wav is in", draft
+    print("wav is in", draft)
     audio = MIMEAudio(open(draft).read())
     sender = '%s@%s'%(sender.username, sender.host)
     audio['Subject'] = 'A voicemail from %s'%sender
@@ -148,7 +148,7 @@ class VoicemailApplication(DougApplication):
             log.msg("voicemail failed to collect a message: %s"%result)
         else:
             dest, sender, draft = result
-            print "message for %s from %s in %s"%(dest, sender, draft)
+            print("message for %s from %s in %s"%(dest, sender, draft))
             reactor.callInThread(lambda : sendVoicemail(dest, sender, draft))
             log.msg("sent voicemail %r to %s"%(draft, dest))
 

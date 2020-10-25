@@ -109,7 +109,7 @@ class ShtoomMainWindow(ShtoomBaseUI):
         if self.cookie:
             self.app.startDTMF(self.cookie, key)
         else:
-            print "discarding", key
+            print("discarding", key)
 
     def stopDTMF(self, key):
         if self.cookie:

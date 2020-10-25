@@ -37,13 +37,13 @@ class ConferencingApp(VoiceApp):
         super(ConferencingApp, self).__init__(*args, **kwargs)
 
     def __start__(self):
-        print "voiceapp.__start__"
+        print("voiceapp.__start__")
         return ( (CallStartedEvent, self.voiceappStarted),
                  #(Event,            self.unknownEvent),
                )
 
     def unknownEvent(self, event):
-        print "Got unhandled event %s"%event
+        print("Got unhandled event %s"%event)
         return ()
 
     def voiceappStarted(self, event):
@@ -56,7 +56,7 @@ class ConferencingApp(VoiceApp):
         self.leg = event.getLeg()
         self.roomname = roomname = ROOMNAME
 
-        print "voiceapp.__start__ to user %s"%(roomname)
+        print("voiceapp.__start__ to user %s"%(roomname))
         if roomname == 'nope':
             self.leg.rejectCall(CallRejected('go away'))
             del self.leg

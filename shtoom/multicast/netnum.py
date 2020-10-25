@@ -46,7 +46,7 @@ class Network(Address):
     def broadcast(self):
         B = 0xffffffff
         b = self._mask ^ B
-        #print "%x ^ %x  = %x "%(self._mask, B, b)
+        #print("%x ^ %x  = %x "%(self._mask, B, b))
         return b | self._binaddr
 
     def prettyNetmask(self):

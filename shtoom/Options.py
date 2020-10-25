@@ -41,7 +41,7 @@ def _valueSetter(opt, value):
         ret = True
     ovalue = opt.value
     opt.value = value
-    #print "_valueSetter: %s %r %r %s"%(opt.name, ovalue, opt.value, ret)
+    #print("_valueSetter: %s %r %r %s"%(opt.name, ovalue, opt.value, ret))
     return ret
 
 def _optParseBuilder(opt, parser):

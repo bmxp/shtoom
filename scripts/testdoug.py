@@ -28,20 +28,20 @@ class RecordingApp(VoiceApp):
         super(RecordingApp, self).__init__(*args, **kwargs)
 
     def __start__(self):
-        print "voiceapp.__start__"
+        print("voiceapp.__start__")
         return ( (CallStartedEvent, self.answerCall),
                  #(Event,            self.unknownEvent),
                )
 
     def unknownEvent(self, event):
-        print "Got unhandled event %s"%event
+        print("Got unhandled event %s"%event)
         return ()
 
     def answerCall(self, event):
         leg = event.getLeg()
 
         username = leg.getDialog().getCallee().getURI().username
-        print "voiceapp.__start__ to user %s"%(username)
+        print("voiceapp.__start__ to user %s"%(username))
         if username == 'nope':
             leg.rejectCall(CallRejected('go away'))
         else:
@@ -72,7 +72,7 @@ class RecordingApp(VoiceApp):
         sounds = { '1': 'one', '2':'two', '3':'three', '4':'four', '5':'five',
                    '6': 'six', '7':'seven', '8':'eight', '9':'nine', '0':'zero',
                    '*': 'star' }
-        print "got digit", event.digits
+        print("got digit", event.digits)
         s = sounds.get(event.digits)
         if s:
             self.mediaPlay('tmp/%s.raw'%s)
@@ -96,7 +96,7 @@ class RecordingApp(VoiceApp):
                      (Event,     IGNORE_EVENT),
                    )
         else:
-            print "unknown key %r"%(event.digits)
+            print("unknown key %r"%(event.digits))
         return ( (CallEndedEvent, self.allDone),
                  (MediaDoneEvent, IGNORE_EVENT),
                  (DTMFReceivedEvent, self.gotAKey),

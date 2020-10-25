@@ -48,7 +48,7 @@ class PreferencesDialog(wxDialog):
                     if val is not NoDefaultOption:
                         # TODO: boolean types don't seem to be passing their
                         # saved values in correctly
-                        print "val %s is %s"%(optname, val)
+                        print("val %s is %s"%(optname, val))
                     get = lambda e=edit: e.GetValue()
                 elif option.optionType == 'Choice':
                     choices = option.getChoices()
@@ -56,7 +56,7 @@ class PreferencesDialog(wxDialog):
                     edit = wxRadioBox(nbpage, -1, "", choices=rbs,
                         majorDimension=1, style=wxRA_SPECIFY_ROWS)
                     if val is not NoDefaultOption:
-                        print "val is ", val
+                        print("val is ", val)
                         edit.SetStringSelection(val)
                     get = lambda e=edit: e.GetStringSelection()
                 else:
@@ -92,7 +92,7 @@ class PreferencesDialog(wxDialog):
         out = {}
         for k, (type, get, edit) in self.options.items():
             out[k] = get()
-        print "save prefs", out
+        print("save prefs", out)
         app.updateOptions(out)
 
 # end of class PreferencesDialog

@@ -137,31 +137,31 @@ class ShtoomMainWindow(QMainWindow):
 
 
     def fileDTMF(self):
-        print "ShtoomMainWindow.fileDTMF(): Not implemented yet"
+        print("ShtoomMainWindow.fileDTMF(): Not implemented yet")
 
     def fileDebugging(self):
-        print "ShtoomMainWindow.fileDebugging(): Not implemented yet"
+        print("ShtoomMainWindow.fileDebugging(): Not implemented yet")
 
     def fileExit(self):
-        print "ShtoomMainWindow.fileExit(): Not implemented yet"
+        print("ShtoomMainWindow.fileExit(): Not implemented yet")
 
     def editPreferences(self):
-        print "ShtoomMainWindow.editPreferences(): Not implemented yet"
+        print("ShtoomMainWindow.editPreferences(): Not implemented yet")
 
     def helpAbout(self):
-        print "ShtoomMainWindow.helpAbout(): Not implemented yet"
+        print("ShtoomMainWindow.helpAbout(): Not implemented yet")
 
     def callButton_clicked(self):
-        print "ShtoomMainWindow.callButton_clicked(): Not implemented yet"
+        print("ShtoomMainWindow.callButton_clicked(): Not implemented yet")
 
     def hangupButton_clicked(self):
-        print "ShtoomMainWindow.hangupButton_clicked(): Not implemented yet"
+        print("ShtoomMainWindow.hangupButton_clicked(): Not implemented yet")
 
     def registerButton_clicked(self):
-        print "ShtoomMainWindow.registerButton_clicked(): Not implemented yet"
+        print("ShtoomMainWindow.registerButton_clicked(): Not implemented yet")
 
     def lookupButton_clicked(self):
-        print "ShtoomMainWindow.lookupButton_clicked(): Not implemented yet"
+        print("ShtoomMainWindow.lookupButton_clicked(): Not implemented yet")
 
     def __tr(self,s,c = None):
         return qApp.translate("ShtoomMainWindow",s,c)

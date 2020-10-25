@@ -55,13 +55,13 @@ class Debugging(QDialog):
 
 
     def debuggingCloseButton_clicked(self):
-        print "Debugging.debuggingCloseButton_clicked(): Not implemented yet"
+        print("Debugging.debuggingCloseButton_clicked(): Not implemented yet")
 
     def debuggingCloseButton_2_clicked(self):
-        print "Debugging.debuggingCloseButton_2_clicked(): Not implemented yet"
+        print("Debugging.debuggingCloseButton_2_clicked(): Not implemented yet")
 
     def debuggingClearButton_clicked(self):
-        print "Debugging.debuggingClearButton_clicked(): Not implemented yet"
+        print("Debugging.debuggingClearButton_clicked(): Not implemented yet")
 
     def __tr(self,s,c = None):
         return qApp.translate("Debugging",s,c)

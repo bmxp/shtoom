@@ -21,7 +21,7 @@ class PreferencesDialog:
         elif res == gtk.RESPONSE_REJECT:
             self.discardChanges()
         else:
-            print "unknown response", res
+            print("unknown response", res)
         self.dialog.destroy()
 
     def saveChanges(self):
@@ -60,7 +60,7 @@ class PreferencesDialog:
                 continue
             tab = gtk.VBox(False,8)
             tab.set_border_width(8)
-            #print "tab", tab
+            #print("tab", tab)
             desc = gtk.Label(group.description)
             tab.pack_start(desc, False, False)
 
@@ -121,7 +121,7 @@ class PreferencesDialog:
                                          option.name,
                                          entry.get_active))
                 else:
-                    print "unknown option", option.type
+                    print("unknown option", option.type)
 
                 tab.pack_start(optBox, False, False)
             notebook.append_page(tab, gtk.Label(group.name))

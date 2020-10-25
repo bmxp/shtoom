@@ -24,19 +24,19 @@ class EchoApp(VoiceApp):
     announceFile = None
 
     def __start__(self):
-        print "voiceapp.__start__"
+        print("voiceapp.__start__")
         return ( (CallStartedEvent, self.answerCall),
                  #(Event,            self.unknownEvent),
                )
 
     def unknownEvent(self, event):
-        print "Got unhandled event %s"%event
+        print("Got unhandled event %s"%event)
         return ()
 
     def answerCall(self, event):
         leg = event.getLeg()
         username = leg.getDialog().getCallee().getURI().username
-        print "voiceapp.__start__ to user %s"%(username)
+        print("voiceapp.__start__ to user %s"%(username))
         if username == 'nope':
             leg.rejectCall(CallRejected('go away'))
         else:

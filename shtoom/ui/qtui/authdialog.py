@@ -139,16 +139,16 @@ class ShtoomAuthDialog(QDialog):
 
 
     def userEntry_returnPressed(self):
-        print "ShtoomAuthDialog.userEntry_returnPressed(): Not implemented yet"
+        print("ShtoomAuthDialog.userEntry_returnPressed(): Not implemented yet")
 
     def passwdEntry_returnPressed(self):
-        print "ShtoomAuthDialog.passwdEntry_returnPressed(): Not implemented yet"
+        print("ShtoomAuthDialog.passwdEntry_returnPressed(): Not implemented yet")
 
     def cancelButton_pressed(self):
-        print "ShtoomAuthDialog.cancelButton_pressed(): Not implemented yet"
+        print("ShtoomAuthDialog.cancelButton_pressed(): Not implemented yet")
 
     def okButton_pressed(self):
-        print "ShtoomAuthDialog.okButton_pressed(): Not implemented yet"
+        print("ShtoomAuthDialog.okButton_pressed(): Not implemented yet")
 
     def __tr(self,s,c = None):
         return qApp.translate("ShtoomAuthDialog",s,c)
