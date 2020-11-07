@@ -11,8 +11,8 @@ http://www.freenet.org.nz/python/pyPortAudio/
 # system imports
 import fastaudio
 # sibling imports
-import interfaces
-import baseaudio
+from . import interfaces
+from . import baseaudio
 
 # from Twisted
 from twisted.python import log

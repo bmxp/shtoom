@@ -8,7 +8,8 @@ from shtoom.lwc import Interface, implements
 
 from twisted.python import log
 
-import sets, struct
+#import sets
+import struct
 
 try:
     import audioop
@@ -27,7 +28,7 @@ class MediaSample:
         self.data = data
 
     def __repr__(self):
-        return "<%s/%s, %s>" % (self.__class__.__name__, self.ct, `self.data`,)
+        return "<%s/%s, %s>" % (self.__class__.__name__, self.ct, self.data,)
 
 class NullConv:
     # XXX Should be refactored away - MediaLayer is the only derived class
@@ -58,30 +59,36 @@ class NullConv:
         return '<%s wrapped around %r>'%(self.__class__.__name__, self._d)
 
 def isLittleEndian():
-    import struct
-    p = struct.pack('H', 1)
-    if p == '\x01\x00':
+    # deprecated way to check endianness
+    #import struct
+    #p = struct.pack('H', 1)
+    #if p == '\x01\x00':
+    #    return True
+    #elif p == '\x00\x01':
+    #    return False
+    #else:
+    #    raise ValueError("insane endian-check result %r"%(p))
+    # better way for Python 3.3 and up:
+    import sys
+    if sys.byteorder == 'little': 
         return True
-    elif p == '\x00\x01':
-        return False
-    else:
-        raise ValueError("insane endian-check result %r"%(p))
+    return False
 
 class IAudioCodec:
-    def buffer_and_encode(self, bytes):
-        "encode bytes, a string of audio"
-    def decode(self, bytes):
-        "decode bytes, a string of audio"
+    def buffer_and_encode(self, payload):
+        "encode payload, some bytes of audio"
+    def decode(self, payload):
+        "decode payload, some bytes of audio"
 
 class _Codec:
-    "Base class for codecs"
+    """Base class for codecs"""
     implements(IAudioCodec)
     def __init__(self, samplesize):
         self.samplesize = samplesize
-        self.b = ''
+        self.b = b''
 
-    def buffer_and_encode(self, bytes):
-        self.b += bytes
+    def buffer_and_encode(self, payload):
+        self.b += payload
         res = []
         while len(self.b) >= self.samplesize:
             sample, self.b = self.b[:self.samplesize], self.b[self.samplesize:]
@@ -98,17 +105,17 @@ class GSMCodec(_Codec):
             self.enc = codecs.gsm.gsm(codecs.gsm.BIG)
             self.dec = codecs.gsm.gsm(codecs.gsm.BIG)
 
-    def _encode(self, bytes):
-        assert isinstance(bytes, str), bytes
-        return self.enc.encode(bytes)
+    def _encode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        return self.enc.encode(payload)
 
-    def decode(self, bytes):
-        assert isinstance(bytes, str), bytes
-        if len(bytes) != 33:
-            log.msg("GSM: short read on decode, %d !=  33"%len(bytes),
+    def decode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        if len(payload) != 33:
+            log.msg("GSM: short read on decode, %d !=  33"%len(payload),
                                                             system="codec")
             return None
-        return self.dec.decode(bytes)
+        return self.dec.decode(payload)
 
 class SpeexCodec(_Codec):
     "A codec for Speex"
@@ -118,46 +125,50 @@ class SpeexCodec(_Codec):
         self.dec = codecs.speex.new(8)
         _Codec.__init__(self, 320)
 
-    def _encode(self, bytes, unpack=struct.unpack):
-        frames = list(unpack('160h', bytes))
+    def _encode(self, payload, unpack=struct.unpack):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        frames = list(unpack('160h', payload))
         return self.enc.encode(frames)
 
-    def decode(self, bytes):
-        if len(bytes) != 40:
-            log.msg("speex: short read on decode %d != 40"%len(bytes),
+    def decode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        if len(payload) != 40:
+            log.msg("speex: short read on decode %d != 40"%len(payload),
                                                             system="codec")
             return None
-        frames = self.dec.decode(bytes)
+        frames = self.dec.decode(payload)
         ostr = struct.pack('160h', *frames)
         return ostr
 
 class MulawCodec(_Codec):
-    "A codec for mulaw encoded audio (G.711U, PCMU)"
+    """A codec for mulaw encoded audio (G.711U, PCMU)"""
 
     def __init__(self):
         _Codec.__init__(self, 320)
-        self.buf = ''
+        self.buf = b''
 
-    def _encode(self, bytes):
-        return audioop.lin2ulaw(bytes, 2)
+    def _encode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        return audioop.lin2ulaw(payload, 2)
 
-    def decode(self, bytes):
-        if not bytes:
+    def decode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        if not payload:
             return
-        elif len(bytes) != 160:
-            log.msg("mulaw: short read on decode, %d != 160"%len(bytes),
+        elif len(payload) != 160:
+            log.msg("mulaw: short read on decode, %d != 160"%len(payload),
                                                             system="codec")
             # Pad with silence.
-            extra = (160 - len(bytes)) * bytes[-1]
-            bytes += extra
+            extra = (160 - len(payload)) * payload[-1]
+            payload += extra
         if 0:
-            bytes = audioop.ulaw2lin(bytes, 2)
-            self.buf += bytes
+            payload = audioop.ulaw2lin(payload, 2)
+            self.buf += payload
             if len(self.buf) > 159:
                 out, self.buf = self.buf[:160], self.buf[160:]
                 return out
         else:
-            return audioop.ulaw2lin(bytes, 2)
+            return audioop.ulaw2lin(payload, 2)
 
 class AlawCodec(_Codec):
     "A codec for alaw encoded audio (G.711A, PCMA)"
@@ -165,33 +176,37 @@ class AlawCodec(_Codec):
     def __init__(self):
         _Codec.__init__(self, 320)
 
-    def _encode(self, bytes):
-        return audioop.lin2alaw(bytes, 2)
+    def _encode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        return audioop.lin2alaw(payload, 2)
 
-    def decode(self, bytes):
-        if len(bytes) != 160:
-            log.msg("alaw: short read on decode, %d != 160"%len(bytes),
+    def decode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        if len(payload) != 160:
+            log.msg("alaw: short read on decode, %d != 160"%len(payload),
                                                             system="codec")
-        return audioop.alaw2lin(bytes, 2)
+        return audioop.alaw2lin(payload, 2)
 
 class NullCodec(_Codec):
-    "A codec that consumes/emits nothing (e.g. for confort noise)"
+    """A codec that consumes/emits nothing (e.g. for comfort noise)"""
 
     def __init__(self):
         _Codec.__init__(self, 1)
 
-    def _encode(self, bytes):
+    def _encode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
         return None
 
-    def decode(self, bytes):
+    def decode(self, payload):
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
         return None
 
 class PassthruCodec(_Codec):
-    "A codec that leaves it's input alone"
+    """A codec that leaves it's input alone"""
     def __init__(self):
         _Codec.__init__(self, None)
-    decode = lambda self, bytes: bytes
-    buffer_and_encode = lambda self, bytes: [bytes]
+    decode = lambda self, payload: payload
+    buffer_and_encode = lambda self, payload: [payload]
 
 def make_codec_set():
     format_to_codec = {}
@@ -213,8 +228,10 @@ def make_codec_set():
     #    format_to_codec[PT_ILBC] = ILBCCodec()
     return format_to_codec
 
-known_formats = (sets.ImmutableSet(make_codec_set().keys()) -
-                                  sets.ImmutableSet([PT_CN, PT_xCN,]))
+# changed for Python 3
+# sets.ImmutableSet ==> frozenset
+known_formats = (frozenset(make_codec_set().keys()) -
+                                  frozenset([PT_CN, PT_xCN,]))
 
 class Codecker:
     def __init__(self, format):
@@ -233,14 +250,15 @@ class Codecker:
     def getDefaultFormat(self):
         return self.format
 
-    def handle_audio(self, bytes):
-        "Accept audio as bytes, emits MediaSamples."
-        if not bytes:
+    def handle_audio(self, payload):
+        """Accept audio as bytes, emits MediaSamples."""
+        assert isinstance(payload, bytes), "payload is not an instance of bytes"
+        if not payload:
             return None
         codec = self.format_to_codec.get(self.format)
         if not codec:
             raise ValueError("can't encode format %r"%self.format)
-        encaudios = codec.buffer_and_encode(bytes)
+        encaudios = codec.buffer_and_encode(payload)
         for encaudio in encaudios:
             samp = MediaSample(self.format, encaudio)
             if self.handler is not None:
@@ -249,7 +267,7 @@ class Codecker:
                 return samp
 
     def decode(self, packet):
-        "Accepts an RTPPacket, emits audio as bytes"
+        """Accepts an RTPPacket, emits audio as bytes"""
         if not packet.data:
             return None
         codec = self.format_to_codec.get(packet.header.ct)

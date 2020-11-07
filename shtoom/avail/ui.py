@@ -44,7 +44,7 @@ def getWxInterface(fail=False):
 def getTkInterface(fail=False):
     import sys
     try:
-        import Tkinter
+        import tkinter
         import shtoom.ui.tkshtoom
     except ImportError:
         cleanup('Tkinter', '_tkinter', 'shtoom.ui.tkshtoom')

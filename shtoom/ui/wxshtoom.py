@@ -3,7 +3,7 @@
 from shtoom.ui.wxui import *
 from wxPython.wx import *
 from twisted.internet import reactor
-import thread
+import _thread
 
 class WxInjector(wxTimer):
     def __init__(self, evtlist, interval=200):

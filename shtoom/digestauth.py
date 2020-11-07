@@ -1,5 +1,9 @@
-import md5, sha, time, random
-
+# import hashlib instead of md5
+#import md5
+#import sha
+import hashlib
+import time
+import random
 
 def generate_nonce(bits, randomness=None):
     "This could be stronger"
@@ -34,9 +38,9 @@ class DigestAuthServer:
         if algorithm is None:
             algorithm = self.algorithm
         if algorithm == 'MD5':
-            H = lambda x: md5.new(x).hexdigest()
-        elif algorithm == 'SHA':
-            H = lambda x: sha.new(x).hexdigest()
+            H = lambda x: hashlib.md5(x).hexdigest()
+        elif algorithm == 'SHA1':
+            H = lambda x: hashlib.sha1(x).hexdigest()
         # XXX MD5-sess
         KD = lambda s, d, H=H: H("%s:%s" % (s, d))
         return H, KD
@@ -88,7 +92,7 @@ class DigestAuthServer:
 
     def check_auth(self, header, method='GET'):
         "Check a response to our auth challenge"
-        from urllib2 import parse_http_list
+        from urllib3 import parse_http_list
         H, KD = self.get_algorithm_impls()
         resp = parse_keqv_list(parse_http_list(header))
         algo = resp.get('algorithm', 'MD5').upper()

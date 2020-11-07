@@ -321,17 +321,17 @@ class NetAddress:
             raise ValueError("mask should be between 0 and 32")
 
         self.net = self.inet_aton(ip)
-        self.mask = ( 2L**32 -1 ) ^ ( 2L**(32-mask) - 1 )
+        self.mask = ( 2**32 -1 ) ^ ( 2**(32-mask) - 1 )
         self.start = self.net
-        self.end = self.start | (2L**(32-mask) - 1)
+        self.end = self.start | (2**(32-mask) - 1)
 
     def inet_aton(self, ipstr):
-        "A sane inet_aton"
+        """A sane inet_aton"""
         if ':' in ipstr:
             return
         net = [ int(x) for x in ipstr.split('.') ] + [ 0,0,0 ]
         net = net[:4]
-        return  ((((((0L+net[0])<<8) + net[1])<<8) + net[2])<<8) +net[3]
+        return ((((((0+net[0])<<8) + net[1])<<8) + net[2])<<8) +net[3]
 
     def inet_ntoa(self, ip):
         import socket, struct
@@ -345,10 +345,10 @@ class NetAddress:
                                            id(self))
 
     def check(self, ip):
-        "Check if an IP or network is contained in this network address"
+        """Check if an IP or network is contained in this network address"""
         if isinstance(ip, NetAddress):
             return self.check(ip.start) and self.check(ip.end)
-        if isinstance(ip, basestring):
+        if isinstance(ip, str):
             ip = self.inet_aton(ip)
         if ip is None:
             return False

@@ -43,7 +43,7 @@ class CredCacheTests(unittest.TestCase):
         ae(app.ini, '[credentials]\nsip.foo.com=Z29uem8Ac2Vla3JpdA==\nsip.bar.com=Z2F6cGFjaG8AYm93bA==\n')
 
     def test_credcache_load(self):
-        from StringIO import StringIO
+        from io import StringIO
         ae = self.assertEqual
         app = DummyApp()
         c = CredCache(app)

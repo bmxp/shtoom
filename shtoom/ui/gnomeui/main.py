@@ -7,7 +7,7 @@ from twisted.python import util, log
 from twisted.internet import reactor, defer
 
 from shtoom.ui.base import ShtoomBaseUI
-from popups import PopupNotice
+from .popups import PopupNotice
 
 from gettext import gettext as _
 
@@ -118,7 +118,7 @@ class ShtoomWindow(ShtoomBaseUI):
         self.address.set_text("")
 
     def on_preferences_activate(self, widget):
-        from prefs import PreferencesDialog
+        from .prefs import PreferencesDialog
         p = PreferencesDialog(self.xml.get_widget("callwindow"), self,
                               self.app.getOptions())
         p.show()
@@ -136,7 +136,7 @@ class ShtoomWindow(ShtoomBaseUI):
         self.dtmfwindow.hide_all()
 
     def on_lookup_clicked(self, w):
-        from addressedit import AddressBook
+        from .addressedit import AddressBook
         self.addressedit = AddressBook(self)
         self.addressedit.show()
 

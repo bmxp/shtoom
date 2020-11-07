@@ -16,7 +16,8 @@ class SoapTests(unittest.TestCase):
         for k, v in request.headers.items():
             if k.lower() == 'soapaction':
                 ae(v, '"%s#GetGenericPortMappingEntry"'%schema)
-        body = request.get_data()
+        #old body = request.get_data()
+        body = request.data
         bs = BeautifulSax(body)
         meth = bs.fetch('u:GetGenericPortMappingEntry')
         ae(len(meth), 1)
@@ -34,7 +35,8 @@ class SoapTests(unittest.TestCase):
         for k, v in request.headers.items():
             if k.lower() == 'soapaction':
                 ae(v, '"%s#GetTotallyBogusRequest"'%schema)
-        body = request.get_data()
+        #old body = request.get_data()
+        body = request.data
         bs = BeautifulSax(body)
         meth = bs.fetch('u:GetTotallyBogusRequest')
         ae(len(meth), 1)
@@ -56,7 +58,8 @@ class SoapTests(unittest.TestCase):
             else:
                 # XXX
                 ae('test failed', '%s not one of a,b,c'%(m.name))
-        ae(request.get_host(), '127.0.0.1:5533')
+        #old ae(request.get_host(), '127.0.0.1:5533')
+        ae(request.host, '127.0.0.1:5533')
 
     def test_soap_scpd(self):
         from shtoom.soapsucks import SOAPRequestFactory, BeautifulSax
@@ -69,7 +72,8 @@ class SoapTests(unittest.TestCase):
         for k, v in request.headers.items():
             if k.lower() == 'soapaction':
                 ae(v, '"%s#GetGenericPortMappingEntry"'%schema)
-        body = request.get_data()
+        #old body = request.get_data()
+        body = request.data
         bs = BeautifulSax(body)
         meth = bs.fetch('u:GetGenericPortMappingEntry')
         ae(len(meth), 1)

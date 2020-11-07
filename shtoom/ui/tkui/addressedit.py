@@ -4,8 +4,8 @@ from twisted.python import util, log
 from twisted.internet import reactor, defer
 from twisted.python import log
 
-from Tkinter import *
-from tkSimpleDialog import Dialog
+from tkinter import *
+from tkinter.simpledialog import Dialog
 
 class AddressBook(Dialog):
     def __init__(self, parent, main):

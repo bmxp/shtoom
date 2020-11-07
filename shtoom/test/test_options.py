@@ -114,12 +114,12 @@ class OptionsTests(unittest.TestCase):
         pass
 
 def _getConfigParsed(all):
-    from ConfigParser import ConfigParser
-    from StringIO import StringIO
+    from configparser import ConfigParser
+    from io import StringIO
     str = StringIO()
     c = all.emitConfigParser()
     str.write(c)
     str.seek(0)
     cfg = ConfigParser()
-    cfg.readfp(str)
+    cfg.read_file(str)
     return cfg

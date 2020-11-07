@@ -16,7 +16,9 @@ from shtoom.doug.events import DTMFReceivedEvent
 #from shtoom.doug.exceptions import *
 from shtoom.doug.statemachine import StateMachine
 from twisted.internet import reactor
-from twisted.python.util import OrderedDict
+#deprecated in twisted 15.5.0
+#from twisted.python.util import OrderedDict
+from collections import OrderedDict
 from twisted.python import log
 
 class Timer:

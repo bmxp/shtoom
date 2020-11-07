@@ -1,1 +1,1 @@
-from main import ShtoomMainWindow
+from .main import ShtoomMainWindow

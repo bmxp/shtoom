@@ -1,5 +1,5 @@
 
-from Tkinter import Toplevel, Tk
+from tkinter import Toplevel, Tk
 
 if __name__ == "__main__":
     _ = lambda x:x
@@ -66,7 +66,7 @@ class Dialog(Popup):
         Popup.__init__(self, parent, addnl)
 
     def body(self):
-        from Tkinter import NW, E, Frame, Label, Button
+        from tkinter import NW, E, Frame, Label, Button
         self.top = Frame(self)
         self.top.grid(row=1,column=1,sticky=E)
         self.label = Label(self.top, text=self.message, justify='center')
@@ -97,7 +97,7 @@ class AuthDialog(Popup):
 
     def body(self):
         print("auth body")
-        from Tkinter import NW, E, W, Frame, Label, Button, Entry, Checkbutton
+        from tkinter import NW, E, W, Frame, Label, Button, Entry, Checkbutton
         defargs = { 'padx':5, 'pady':5, 'sticky':W }
 
         self.top = Frame(self)

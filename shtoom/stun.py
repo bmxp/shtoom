@@ -8,7 +8,8 @@ from twisted.internet import reactor, defer
 from twisted.internet.protocol import DatagramProtocol
 from twisted.python import log
 
-import sets
+# deprecated for Python3, its built in
+#import sets
 
 
 from shtoom.interfaces import NATMapper as INATMapper
@@ -79,7 +80,7 @@ CHANGE_PORT = struct.pack('!i',2)
 CHANGE_IP = struct.pack('!i',4)
 CHANGE_BOTH = struct.pack('!i',6)
 
-for k,v in StunTypes.items():
+for k,v in list(StunTypes.items()):
     StunTypes[v] = k
 del k, v
 
@@ -104,9 +105,15 @@ NatTypePortRestricted = _NatType('PortRestricted')
 _ForceStunType = None
 
 def hexify(s):
+    """create either a string or a bytearray with hex representation"""
     if s is None:
         return
-    ret = ''.join([ '%x'%(ord(c)) for c in s ])
+    if isinstance( s, bytes):
+        ret = ''.join([ '%x'%(c) for c in s ])
+    elif isinstance( s, str):
+        ret = ''.join([ '%x'%(ord(c)) for c in s ])
+    else:
+        ret = None
     return ret
 
 
@@ -122,7 +129,7 @@ else:
         # It's not absolutely necessary to have a particularly strong TID here
         import random
         tid = [ chr(random.randint(0,255)) for x in range(16) ]
-        tid = ''.join(tid)
+        tid = b''.join(tid)
         return tid
 
 def _parseStunResponse(dgram, address, expectedTID=None, oldtids=[]):
@@ -184,7 +191,7 @@ class  _StunBase(object):
         if tid is None:
             tid = getRandomTID()
         mt = 0x1 # binding request
-        avstr = ''
+        avstr = b''
         # add any attributes
         if not avpairs:
             avpairs = ('CHANGE-REQUEST', CHANGE_NONE),
@@ -213,7 +220,7 @@ class StunDiscoveryProtocol(DatagramProtocol, _StunBase):
         self.externalAddress = None
         self.localAddress = None
         self.expectedTID = None
-        self.oldTIDs = sets.Set()
+        self.oldTIDs = set()
         self.natType = None
         self.servers = servers
         #self.servers = [(socket.gethostbyname(host), port)
@@ -258,7 +265,7 @@ class StunDiscoveryProtocol(DatagramProtocol, _StunBase):
             if self._stunState == '1':
                 # We got a (potentially) working STUN server!
                 # Cancel the retransmit timers for the other ones
-                for k in self._potentialStuns.keys():
+                for k in list(self._potentialStuns.keys()):
                     self._potentialStuns[k].cancel()
                     self._potentialStuns[k] = None
                 resdict = _parseStunResponse(dgram, address, self.expectedTID,
@@ -426,7 +433,7 @@ class StunHook(_StunBase):
         self._pending = {}
         self.servers = servers
         self.expectedTID = None
-        self.oldTIDs = sets.Set()
+        self.oldTIDs = set()
         self._stunState = 'hook'
         super(StunHook, self).__init__(*args, **kwargs)
 
@@ -463,7 +470,7 @@ class StunHook(_StunBase):
             return
 
         mt, pktlen, tid = struct.unpack('!hh16s', dgram[:20])
-        if self._pending.has_key(tid):
+        if tid in self._pending:
             delayed = self._pending[tid]
             if delayed is not None:
                 delayed.cancel()
@@ -477,7 +484,7 @@ class StunHook(_StunBase):
             # Got a valid response. Clean up around here first.
             self.uninstallStun()
             # kill any pending retransmits
-            for delayed in self._pending.values():
+            for delayed in list(self._pending.values()):
                 if delayed is not None:
                     delayed.cancel()
             # send response

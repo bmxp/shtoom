@@ -9,7 +9,7 @@ class AddrLookup:
         self.booklist = [] # A list of all active address books in priority order
 
         ## For now just add the default book to the lookup
-        import defaultbook
+        from . import defaultbook
         self.booklist.append(defaultbook.book)
         self.bookmap[defaultbook.book.prefix()] = defaultbook.book
 

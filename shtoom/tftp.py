@@ -1,7 +1,7 @@
 from twisted.internet import reactor, defer
 from twisted.internet.protocol import DatagramProtocol
 from twisted.python import log
-import struct, sys, StringIO
+import struct, sys, io
 
 TftpOpcodes = {
     0x0001: 'RRQ',
@@ -83,7 +83,7 @@ class TftpProtocol(DatagramProtocol, object):
         if fp is not None:
             self.fp = fp
         else:
-            self.fp = StringIO.StringIO()
+            self.fp = io.StringIO()
         remhost, rempath = remfile.split(':',1)
         resdef = reactor.resolve(remhost)
         self.retdef = defer.Deferred()

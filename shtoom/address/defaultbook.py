@@ -1,8 +1,8 @@
 ## Implementation of the stupid default Shtoom address book
 ## Author: Casper Wilstup
 
-from addrinterface import AddressEntry, AddressBook
-from ConfigParser import SafeConfigParser
+from .addrinterface import AddressEntry, AddressBook
+from configparser import SafeConfigParser
 import os
 import os.path
 

@@ -38,7 +38,7 @@ ilbc = None # always, until it's implemented
 def listCodecs():
     all = globals().copy()
     del all['listCodecs']
-    for name, val in all.items():
+    for name, val in list(all.items()):
         if val is None:
             del all[name]
         elif name.startswith('_'):

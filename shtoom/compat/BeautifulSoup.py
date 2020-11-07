@@ -71,6 +71,8 @@ __date__ = "$Date: 2004/06/10 09:42:44 $"
 __copyright__ = "Copyright (c) 2004 Leonard Richardson"
 __license__ = "Python"
 
+# ToDo: exchange sgmllib3k for something new, it was deprecated with Python3
+# ToDo: Maybe the whole BeautifulSoup can be downloaded and exchanged by bs4 from Pypi?
 from sgmllib import SGMLParser
 import string
 
@@ -167,7 +169,8 @@ class Tag(PageElement):
         return s
 
     def renderContents(self):
-        return string.join(map(str, self.contents), '')
+        #old return string.join(map(str, self.contents), '')
+        return ''.join(map(str, self.contents))
 
     def isSelfClosing(self):
         return self.name in BeautifulSoup.SELF_CLOSING_TAGS
@@ -300,26 +303,27 @@ class BeautifulSoup(SGMLParser, Tag):
             mostRecentTag = self.popTag()
         return mostRecentTag
 
-    def unknown_starttag(self, name, attrs):
-        if self.quoteStack:
-            #This is not a real tag.
-            #print("<%s> is not real!" % name)
-            attrs = map(lambda(x, y): '%s="%s"' % (x, y), attrs)
-            self.handle_data('<%s %s>' % (name, attrs))
-            return
-        self.endData()
-        tag = Tag(name, attrs, self.currentTag, self.previous)
-        if self.previous:
-            self.previous.next = tag
-        self.previous = tag
-        if not name in self.SELF_CLOSING_TAGS and not name in self.NESTABLE_TAGS:
-            self._pop_to_tag(name)
-        self.pushTag(tag)
-        if name in self.SELF_CLOSING_TAGS:
-            self.popTag()
-        if name in self.QUOTE_TAGS:
-            #print("Beginning quote (%s)" % name)
-            self.quoteStack.append(name)
+    # gives an error at lamba() and was not used anywhere so commented 
+    # def unknown_starttag(self, name, attrs):
+    #     if self.quoteStack:
+    #         #This is not a real tag.
+    #         #print("<%s> is not real!" % name)
+    #         attrs = map(lambda(x, y): '%s="%s"' % (x, y), attrs)
+    #         self.handle_data('<%s %s>' % (name, attrs))
+    #         return
+    #     self.endData()
+    #     tag = Tag(name, attrs, self.currentTag, self.previous)
+    #     if self.previous:
+    #         self.previous.next = tag
+    #     self.previous = tag
+    #     if not name in self.SELF_CLOSING_TAGS and not name in self.NESTABLE_TAGS:
+    #         self._pop_to_tag(name)
+    #     self.pushTag(tag)
+    #     if name in self.SELF_CLOSING_TAGS:
+    #         self.popTag()
+    #     if name in self.QUOTE_TAGS:
+    #         #print("Beginning quote (%s)" % name)
+    #         self.quoteStack.append(name)
 
     def unknown_endtag(self, name):
         if self.quoteStack and self.quoteStack[-1] != name:

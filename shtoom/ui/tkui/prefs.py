@@ -1,8 +1,8 @@
 
 
-from Tkinter import *
+from tkinter import *
 
-from tkSimpleDialog import Dialog
+from tkinter.simpledialog import Dialog
 from shtoom.Options import NoDefaultOption, getPrettyName
 
 
@@ -16,7 +16,7 @@ class PreferencesDialog(Dialog):
         Dialog.__init__(self, parent, title="Preferences")
 
     def body(self, parent):
-        import notebook
+        from . import notebook
         notebook = notebook.notebook(parent, side=TOP)
         for group in self.opts:
             tab = Frame(notebook())

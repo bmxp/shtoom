@@ -2,8 +2,8 @@
 
 # A special audio device. It merely echoes back what you send it.
 
-from converters import MediaLayer
-import baseaudio
+from .converters import MediaLayer
+from . import baseaudio
 
 opened = None
 

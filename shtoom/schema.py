@@ -106,7 +106,7 @@ class Float(SchemaObject):
 
 class String(SchemaObject):
     "A string"
-    _requiredType = unicode
+    _requiredType = str
 
 class Password(String):
     "A password is a string that is handled 'differently' for display &c"
@@ -124,7 +124,7 @@ class Boolean(SchemaObject):
 
         # bool(obj) does true/false testing of obj - not what I want,
         # as it will too easily conceal errors - e.g. bool('Fasle') is True
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             # How do I init gettext from trial?!
             if value.lower() in ('false', 'no', '0'): #, _('no'), _('false')
                 return False
@@ -139,7 +139,7 @@ class Boolean(SchemaObject):
 
 
 class ObjectGroup(object):
-    "base class for all object containers"
+    """base class for all object containers"""
 
     def __init__(self, name='', description='', help='', **kwargs):
         self.name = name

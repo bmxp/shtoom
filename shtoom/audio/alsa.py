@@ -4,7 +4,7 @@
 import alsaaudio
 
 # from Shtoom
-import baseaudio
+from . import baseaudio
 
 # from Twisted
 from twisted.python import log

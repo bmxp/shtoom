@@ -1,6 +1,6 @@
 # Copyright (C) 2004 Anthony Baxter
 
-import baseaudio
+from . import baseaudio
 import traceback
 from twisted.python import log
 from twisted.internet.protocol import Protocol, Factory

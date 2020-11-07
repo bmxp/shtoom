@@ -1,8 +1,10 @@
 #!/usr/bin/env python
+
 # Hack hack hack.
 # This thing allows the script to be run from a subdirectory of the
 # source code without having to explicitly set the PYTHONPATH or
 # install the shtoom code.
+
 import sys, os
 f = sys.path.pop(0)
 if f.endswith('scripts') and os.path.isdir(os.path.join(os.path.dirname(f),
@@ -28,7 +30,7 @@ class MessageApp(VoiceApp):
     # files in doug, this should be 8KHz 16 bit linear PCM
     # audio.
     announceFile = None
-    callURL = 'sip:600@10.98.1.17'
+    callURL = 'sip:**612@192.168.20.1'
 
     def __init__(self, *args, **kwargs):
         self.__dict__.update(kwargs)

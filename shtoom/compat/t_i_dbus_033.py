@@ -58,7 +58,7 @@ class ProxyObject(dbus.ProxyObject):
             raise AttributeError(member)
         else:
             iface = None
-            if (keywords.has_key('dbus_interface')):
+            if ('dbus_interface' in keywords):
                 iface = keywords['dbus_interface']
 
             return ProxyMethod(self._bus.get_connection(),
@@ -74,7 +74,7 @@ class ProxyMethod(dbus.ProxyMethod):
         if not isinstance(reactor, gtk2reactor.Gtk2Reactor):
             raise RuntimeError("dbus only works with Gtk2Reactor, not %r"%(reactor))
         dbus_interface = self._dbus_interface
-        if (keywords.has_key('dbus_interface')):
+        if ('dbus_interface' in keywords):
             dbus_interface = keywords['dbus_interface']
 
         message = dbus_bindings.MethodCall(self._object_path, dbus_interface,

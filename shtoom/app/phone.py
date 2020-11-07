@@ -6,7 +6,11 @@ DEVELREV=DEVELREV+"-"+DEVELREVTAG
 
 # The Phone app.
 
-import os, platform, sys, threading, time
+import os
+import platform
+import sys
+import threading
+import time
 
 from twisted.internet import defer, protocol
 from twisted.python import log, threadable

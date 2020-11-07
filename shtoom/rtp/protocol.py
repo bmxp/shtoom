@@ -262,9 +262,9 @@ class RTPProtocol(DatagramProtocol):
     def _send_cn_packet(self, logit=False):
         assert hasattr(self, 'dest'), "_send_cn_packet called before start %r" % (self,)
         # PT 13 is CN.
-        if self.ptdict.has_key(PT_CN):
+        if PT_CN in self.ptdict:
             cnpt = PT_CN.pt
-        elif self.ptdict.has_key(PT_xCN):
+        elif PT_xCN in self.ptdict:
             cnpt = PT_xCN.pt
         else:
             # We need to send SOMETHING!?!

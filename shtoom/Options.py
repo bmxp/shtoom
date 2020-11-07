@@ -142,16 +142,16 @@ class AllOptions(object):
             self._filename = os.path.join(d, filename)
 
     def loadOptsFile(self, loadData=None):
-        from ConfigParser import SafeConfigParser
+        from configparser import SafeConfigParser
         if loadData is None:
             if self._filename is None:
                 return None
-            cfg = SafeConfigParser()
+            cfg = ConfigParser()
             if hasattr(os, 'access'):
                 if not os.access(self._filename, os.R_OK|os.W_OK):
                     return
             try:
-                cfg.readfp(open(self._filename, 'rU'))
+                cfg.readfp(open(self._filename, 'r'))
             except IOError:
                 return
         else:
@@ -177,7 +177,7 @@ class AllOptions(object):
             return None
         ini = self.emitConfigParser()
         if ini:
-            fp = open(self._filename, 'wU')
+            fp = open(self._filename, 'w')
             fp.write(ini)
             fp.close()
 
@@ -215,7 +215,7 @@ class AllOptions(object):
                             o.dynamic = True
 
     def hasValue(self, option):
-        if not self._cached_options.has_key(option):
+        if not option in self._cached_options:
             for g in self:
                 if getattr(g, 'variableNames', None):
                     # Then cache the group object, not the items in it
@@ -226,7 +226,7 @@ class AllOptions(object):
         return option in self._cached_options
 
     def getValue(self, option, dflt=NoDefaultOption):
-        if not self._cached_options.has_key(option):
+        if not option in self._cached_options:
             for g in self:
                 if getattr(g, 'variableNames', None):
                     # Then cache the group object, not the items in it

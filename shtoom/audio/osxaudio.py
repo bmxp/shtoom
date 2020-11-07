@@ -3,14 +3,14 @@
 ## Have to initialize the threading mechanisms in order for PyGIL_Ensure to work
 from twisted.python import threadable
 threadable.init(1)
-import thread ; thread.start_new_thread(lambda: None, ())
+import _thread ; _thread.start_new_thread(lambda: None, ())
 
 import coreaudio
 from math import sin, sqrt
 from numarray import multiply, add, Int16, Int32, zeros, Float32
 from twisted.internet import reactor
 import sys, traceback, audioop
-from converters import MediaLayer
+from .converters import MediaLayer
 from time import time
 
 opened = None

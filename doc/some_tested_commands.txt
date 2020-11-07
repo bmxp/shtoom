@@ -1,0 +1,6 @@
+Some commands tested:
+=====================
+
+python3 shecho.py --register-uri=sip:192.168.20.1:5060 --register-user=TuxPhone --register-authuser=TuxPhone --register-authpasswd=tux4unix! --outbound-proxy-url=sip:192.168.20.1:5060
+
+python3 dougdemo.py --register-uri=sip:192.168.20.1:5060 --register-user=TuxPhone --register-authuser=TuxPhone --register-authpasswd=tux4unix! --outbound-proxy-url=sip:192.168.20.1:5060 --stun-policy=never --nat=none

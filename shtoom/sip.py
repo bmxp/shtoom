@@ -11,16 +11,27 @@
 # much planned and it is gradually being refactored.
 
 import copy
-import digestauth
-import md5
+#import md5 instead use hashlib.md5()
+#import sha  instead use hashlib.sha1()
+import hashlib
 import random
-import sha
 import socket
 import sys
 import time
-from urllib2 import parse_http_list
 
-from interfaces import SIP as ISip
+#def parse_http_list(s):
+#    """Parse lists as described by RFC 2068 Section 2.
+#    In particular, parse comma-separated lists where the elements of
+#    the list may include quoted-strings.  A quoted-string could
+#    contain a comma.  A non-quoted string could have quotes in the
+#    middle.  Neither commas nor quotes count if they are escaped.
+#    Only double-quotes count, not single-quotes.
+#    """
+
+#from urllib2 import parse_http_list
+from requests.utils import parse_list_header as parse_http_list
+
+from .interfaces import SIP as ISip
 
 from twisted.internet.protocol import DatagramProtocol, ConnectedDatagramProtocol
 from twisted.internet import defer
@@ -31,7 +42,10 @@ from shtoom.exceptions import CallRejected, CallFailed, HostNotKnown
 from shtoom import __version__ as ShtoomVersion
 from shtoom.sdp import SDP
 
-import struct, email.Parser
+import shtoom.digestauth
+
+import struct
+import email.parser
 
 _CACHED_LOCAL_IP = None
 
@@ -79,7 +93,7 @@ def formatAddress(threetuple):
         twisted.protocols.sip.parseAddress()
     """
     display, uri, params = threetuple
-    params = ';'.join(['='.join(x) for x in params.items()])
+    params = ';'.join(['='.join(x) for x in list(params.items())])
     if params:
         params = ';'+params
     if display:
@@ -95,30 +109,22 @@ VIA_COOKIE = "z9hG4bK"
 def computeBranch(msg):
     """Create a branch tag to uniquely identify this message.  See
     RFC3261 sections 8.1.1.7 and 16.6.8."""
-    if msg.headers.has_key('via') and msg.headers['via']:
+    if 'via' in msg.headers and msg.headers['via']:
         oldvia = msg.headers['via'][0]
     else:
         oldvia = ''
-    return (VIA_COOKIE + 
-            md5.new(
-                    (tpsip.parseAddress(msg.headers['to'][0])[2].get('tag','') 
-                     +
-                     tpsip.parseAddress(msg.headers['from'][0])[2].get('tag','')
-                     +
-                     msg.headers['call-id'][0] 
-                     +
-                     msg.uri.toString() 
-                     +
-                     oldvia  
-                     +
-                     msg.headers['cseq'][0].split(' ')[0]
-                    )
-            ).hexdigest())
+    payload = (tpsip.parseAddress(msg.headers['to'][0])[2].get('tag','')
+                     +tpsip.parseAddress(msg.headers['from'][0])[2].get('tag','')
+                     + msg.headers['call-id'][0] 
+                     + msg.uri.toString() 
+                     + oldvia  
+                     + msg.headers['cseq'][0].split(' ')[0])
+    return (VIA_COOKIE + hashlib.md5(payload.encode()).hexdigest())
 
 
 class Address:
     def __init__(self, addr, ensureTag=False):
-        if isinstance(addr, basestring):
+        if isinstance(addr, str):
             threetuple = tpsip.parseAddress(addr)
             self._display, self._uri, self._params = threetuple
         elif isinstance(addr, tpsip.URL):
@@ -131,7 +137,7 @@ class Address:
             self._display, self._uri, self._params = addr
         else:
             raise ValueError("Address() takes either an address or a 3-tuple")
-        if ensureTag and not self._params.has_key('tag'):
+        if ensureTag and not 'tag' in self._params:
             self._params['tag'] = self.genTag()
 
     def genTag(self):
@@ -158,7 +164,7 @@ def _is_ip(hostname):
     if len(nums) != 4:
         return False
     try:
-        nums = map(int, nums)
+        nums = list(map(int, nums))
     except ValueError:
         return False
     for num in nums:
@@ -444,11 +450,11 @@ class Call(object):
         if isinstance(response, CallFailed):
             return self.rejectedIncoming(response)
         else:
-            assert isinstance(response, basestring)
+            assert isinstance(response, str)
             return self.acceptedIncoming(response)
 
     def acceptedIncoming(self, cookie):
-        assert isinstance(cookie, basestring)
+        assert isinstance(cookie, str)
         log.msg("acceptIncoming setting cookie to %r"%(cookie), system='sip')
         self.cookie = cookie
         lhost, lport = self.getLocalSIPAddress()
@@ -556,7 +562,7 @@ class Call(object):
                                                 ).getURI(parsed=True)
         self._remoteAOR = self.dialog.getCaller().getURI()
         d.addCallback(lambda x:self.recvInvite(invite)).addErrback(log.err)
-        if invite.headers.has_key('subject'):
+        if 'subject' in invite.headers:
             desc = invite.headers['subject'][0]
         else:
             name,uri,params =  tpsip.parseAddress(invite.headers['from'][0])
@@ -602,7 +608,7 @@ class Call(object):
         
     def sendInvite(self, toAddr, cookie=None, auth=None, authhdr=None, init=0):
         if cookie:
-            assert isinstance(cookie, basestring)
+            assert isinstance(cookie, str)
             print("sendinvite setting cookie to", cookie)
             self.cookie = cookie
         lhost, lport = self.getLocalSIPAddress()
@@ -850,16 +856,16 @@ class Call(object):
 
     def _getHashingImplementation(self, algorithm):
         if algorithm.lower() == 'md5':
-            H = lambda x: md5.new(x).hexdigest()
-        elif algorithm.lower() == 'sha':
-            H = lambda x: sha.new(x).hexdigest()
+            H = lambda x: hashlib.md5(x).hexdigest()
+        elif algorithm.lower() == 'sha1':
+            H = lambda x: hashlib.sha1(x).hexdigest()
         # XXX MD5-sess
         KD = lambda s, d, H=H: H("%s:%s" % (s, d))
         return H, KD
 
     def calcAuth(self, method, uri, authchal, cred):
         if not cred:
-            raise RuntimeError("Auth required, but not provided?")
+            raise RuntimeError( "Auth required, but not provided?")
         (user, passwd) = cred
         authmethod, auth = authchal.split(' ', 1)
         if authmethod.lower() != 'digest':
@@ -1097,7 +1103,7 @@ class Registration(Call):
         register.creationFinished()
         self.addViaHeader(register)
         try:
-            self.sip.transport.write(register.toString(), _hostportToIPPort(self.getRemoteSIPAddress()))
+            self.sip.transport.write(register.toString().encode(), _hostportToIPPort(self.getRemoteSIPAddress()))
         except (socket.error, socket.gaierror):
             e,v,t = sys.exc_info()
             if self.compDef is not None:
@@ -1223,10 +1229,10 @@ class SipProtocol(DatagramProtocol, object):
         super(SipProtocol, self).__init__(*args, **kwargs)
 
     def getCalls(self):
-        return [c for c in self._calls.values() if not isinstance(c, Registration)]
+        return [c for c in list(self._calls.values()) if not isinstance(c, Registration)]
 
     def getRegistrations(self):
-        return [c for c in self._calls.values() if isinstance(c, Registration)]
+        return [c for c in list(self._calls.values()) if isinstance(c, Registration)]
 
     def register(self, removed=None):
         if removed:
@@ -1331,11 +1337,11 @@ class SipProtocol(DatagramProtocol, object):
         if message.response and not call:
             # XXX  should keep a cache of recently discarded calls
             self.app.debugMessage("SIP response refers to unknown call %s %r"%(
-                                                    callid, self._calls.keys()))
+                                                    callid, list(self._calls.keys())))
             return
         if message.request and message.method.lower() != 'invite' and not call:
             self.app.debugMessage("SIP request refers to unknown call %s %r"%(
-                                                    callid, self._calls.keys()))
+                                                    callid, list(self._calls.keys())))
             callid = message.headers['call-id'][0]
             call, _d = self._newCallObject(callid = callid)
             call.sendResponse(message, 481)

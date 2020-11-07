@@ -87,8 +87,8 @@ class LWCTests(unittest.TestCase):
             implements(IString)
 
         def stringToFile(s):
-            import StringIO
-            return StringIO.StringIO(s)
+            import io
+            return io.StringIO(s)
 
         registerAdapter(stringToFile, IString, IFile)
 

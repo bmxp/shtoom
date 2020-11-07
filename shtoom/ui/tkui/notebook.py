@@ -2,7 +2,7 @@
 # A simple notebook-like Tkinter widget.
 # Copyright 2003, Iuri Wickert (iwickert yahoo.com)
 
-from Tkinter import *
+from tkinter import *
 
 class notebook:
     # initialization. receives the master widget

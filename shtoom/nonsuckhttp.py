@@ -9,7 +9,7 @@
 from twisted.protocols import basic
 from twisted.internet import defer, protocol
 from twisted.python import log
-from urllib2 import Request as URLRequest
+from urllib3 import request as URLRequest
 
 
 
@@ -221,7 +221,7 @@ class HTTPClient(basic.LineReceiver):
             return encodestring('%s:%s'%(user, password))
 
     def handleResponse(self, data):
-        import urlparse
+        import urllib.parse
         from twisted.internet import reactor
         req = self.request
         resp = self.response
@@ -238,7 +238,7 @@ class HTTPClient(basic.LineReceiver):
             or resp.status in (301, 302, 303) and m == "POST"):
                 # Some sane defaults
             newurl = self.response.getheader('Location')
-            newurl = urlparse.urljoin(req.get_full_url(), newurl)
+            newurl = urllib.parse.urljoin(req.get_full_url(), newurl)
             log.msg("redirecting %s request to %s"%(m, newurl))
             newreq = URLRequest(newurl, data=req.data, headers=req.headers)
             resdef, self.resdef = self.resdef, None

@@ -4,7 +4,9 @@
 #
 
 from shtoom.rtp.formats import RTPDict, PTMarker
-from twisted.python.util import OrderedDict
+#deprecated in twisted 15.5.0
+#from twisted.python.util import OrderedDict
+from collections import OrderedDict
 
 class BadAnnounceError(Exception):
     "Bad Announcement"
@@ -19,7 +21,7 @@ def parse_generic(obj, k, text):
     obj._d.setdefault(k, []).append(text)
 
 def unparse_generic(obj, k):
-    if obj._d.has_key(k):
+    if k in obj._d:
         return obj._d[k]
     else:
         return []
@@ -28,7 +30,7 @@ def parse_singleton(obj, k, text):
     obj._d[k] = text
 
 def unparse_singleton(obj, k):
-    if obj._d.has_key(k):
+    if k in obj._d:
         return [obj._d[k]]
     else:
         return []
@@ -167,7 +169,7 @@ class MediaDescription:
                         # a=rtpmap entry for it.
                         continue
                     self.addRtpMap(PT)
-                    # XXX the above line is unbound local variable error if not RTPDict.has_key(pt) --Zooko 2004-09-29
+                    # XXX the above line is unbound local variable error if not pt in RTPDict --Zooko 2004-09-29
         self.formats = formats
 
     def setMedia(self, media):
@@ -213,7 +215,7 @@ class MediaDescription:
         # XXX quadratic - make rtpmap an ordereddict
         for code, (e, fmt) in map2.items():
             canon = rtpmap2canonical(code,e)
-            if d1.has_key(canon):
+            if canon in d1:
                 outmap[code] = (e, fmt)
         self.rtpmap = outmap
         self.formats = [ str(x) for x in self.rtpmap.keys() ]

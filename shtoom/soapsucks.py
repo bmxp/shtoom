@@ -7,12 +7,12 @@
 
 from twisted.python import log
 
-import urllib2
+import urllib
 
-##########
-# AAAAARGH
-##########
-import sgmllib, re
+# ToDo: remove sgmllib as it is old and just a port from Python2
+import sgmllib
+import re
+
 sgmllib.tagfind = re.compile('[a-zA-Z][-_.:a-zA-Z0-9]*')
 
 
@@ -55,7 +55,7 @@ class _BeautifulSaxParser(ContentHandler, Tag):
             if ( isinstance(tag, Tag) and
                              len(tag.contents) == 1 and
                              isinstance(tag.contents[0], NavigableText) and
-                             not parent.attrMap.has_key(tag.name) ):
+                             not tag.name in parent.attrMap ):
                 parent[tag.name] = str(tag.contents[0])
                 parent.attrs.append((tag.name, str(tag.contents[0])))
         tag = self.tagStack.pop()
@@ -134,7 +134,7 @@ def BeautifulSoap(data):
 
 class SOAPRequestFactory:
     """A Factory object for SOAP Requests, which can then be passed to
-       either urllib2 or nonsuckhttp.
+       either urllib or nonsuckhttp.
     """
     def __init__(self, url, prefix=None):
         self.url = url
@@ -173,7 +173,7 @@ class SOAPRequestFactory:
                                        method=name)
         body = body.encode('utf-8')
         headers = { 'SOAPAction': '"%s#%s"'%(self._prefix,name) }
-        req = urllib2.Request(self.url, body, headers)
+        req = urllib.request.Request(self.url, body, headers)
         req.soapURN = self._prefix
         req.soapMethod = name
         req.soapArgs = kwargs
@@ -236,7 +236,7 @@ def SOAPErrorFactory(request, httperror):
         raise SOAPError(str(body))
 
 def soapenurl(request):
-    from nonsuckhttp import urlopen
+    from .nonsuckhttp import urlopen
     d = urlopen(request)
     factory = lambda response: SOAPResponseFactory(request, response)
     errfactory = lambda response: SOAPErrorFactory(request, response.value)

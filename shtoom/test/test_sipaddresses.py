@@ -37,6 +37,6 @@ class AddressParsingTests(unittest.TestCase):
         ae(str(addr1), str(addr2))
         addr = shsip.Address('"anthony" <sip:anthony@ekit-inc.com>', ensureTag=True)
         d,u,p = tpsip.parseAddress(str(addr))
-        ae(p.has_key('tag'), True)
+        ae('tag' in p, True)
         ae(str(shsip.Address('sip:foo@bar.com')),
            str(shsip.Address(('', 'sip:foo@bar.com', {}))))

@@ -13,8 +13,8 @@ class RTPPacket:
             int >= 0 and < 2**16 and xhdrdata is required to be
             a string whose length is a multiple of 4.
             """
-            assert isinstance(ts, (int, long,)), "ts: %s :: %s" % (ts, type(ts))
-            assert isinstance(ssrc, (int, long,))
+            assert isinstance(ts, (int)), "ts: %s :: %s" % (ts, type(ts))
+            assert isinstance(ssrc, (int))
             assert xhdrtype is None or isinstance(xhdrtype, int) \
                     and xhdrtype >= 0 and xhdrtype < 2**16
             # Sorry, RFC standard specifies that len is in 4-byte words,
@@ -22,7 +22,7 @@ class RTPPacket:
             assert xhdrtype is None or (isinstance(xhdrdata, str) and \
                     len(xhdrdata) % 4 == 0), \
                     "xhdrtype: %s, len(xhdrdata): %s, xhdrdata: %s" % (
-                    xhdrtype, len(xhdrdata), `xhdrdata`,)
+                    xhdrtype, len(xhdrdata), 'xhdrdata',)
 
             (self.ssrc, self.pt, self.ct, self.seq, self.ts,
                  self.marker, self.xhdrtype, self.xhdrdata) = (

@@ -9,13 +9,19 @@ from shtoom.rtp.packets import RTPPacket
 from shtoom.avail import codecs
 
 from shtoom.audio.converters import isLittleEndian
+
+# create some test data
 instr = ''.join([chr(x*32) for x in range(8)]) * 40
+instr = instr.encode()
 if not isLittleEndian():
     import array
-    a = array.array('H')
-    a.fromstring(instr)
+    a = array.array('H')    # defining an array of unsigned short with at least 2 bytes
+    a.frombytes(instr)
     a.byteswap()
-    instr = a.tostring()
+    instr = a.tobytes()
+assert isinstance(instr, bytes), "Test data is not an instance of bytes"
+
+ulawout = b'\x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 '
 
 class DummyDev:
     # Should have read/write
@@ -42,8 +48,8 @@ class CodecTest(unittest.TestCase):
         ae = self.assertEqual
         ar = self.assertRaises
         n = NullCodec()
-        ae(n._encode('frobozulate'), None)
-        ae(n.decode('frobozulate'), None)
+        ae(n._encode(b'frobozulate'), None)
+        ae(n.decode(b'frobozulate'), None)
         ar(ValueError, Codecker, PT_CN)
 
     def testPassthruCodec(self):
@@ -55,18 +61,18 @@ class CodecTest(unittest.TestCase):
 
         class Foo:
             def handle_media_sample(self, sample):
-                ae(sample.data, 'frobozulate')
+                ae(sample.data, b'frobozulate')
         c.set_handler(Foo().handle_media_sample)
 
-        c.handle_audio('frobozulate')
+        c.handle_audio(b'frobozulate')
 
         class Foo:
             def handle_media_sample(self, sample):
-                ae(sample.data, 'farnarkling')
+                ae(sample.data, b'farnarkling')
                 ae(sample.ct, PT_RAW)
         c.set_handler(Foo().handle_media_sample)
 
-        c.handle_audio('farnarkling')
+        c.handle_audio(b'farnarkling')
 
     # XXX testing other codecs - endianness issues? crap.
 
@@ -134,7 +140,7 @@ class CodecTest(unittest.TestCase):
                 tester.fail("WRONG.  The decoding of 30 zeroes (a short Speex frame) is required to be None, but it came out: %s" % (sample,))
         c.set_handler(Foo().handle_media_sample)
 
-        c.handle_audio('\0'*30)
+        c.handle_audio(b'\0'*30)
 
     def testMediaLayer(self):
         ae = self.assertEqual
@@ -152,9 +158,9 @@ class CodecTest(unittest.TestCase):
         d = DougConverter(device=DummyDev())
         d.selectDefaultFormat([PT_RAW,])
         ae(d.getFormat(), PT_RAW)
-        test='froooooooooooogle'
+        test=b'froooooooooooogle'
         p = RTPPacket(0, 0, 0, data=test, ct=PT_RAW)
         ae(d.convertInbound(p), test)
 
 
-ulawout = '\x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 \x9f\x87\x07 '
+

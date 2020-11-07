@@ -23,7 +23,7 @@ class SaneLogObserver:
             text = ' '.join([str(x) for x in msg])
         elif eventDict['isError'] and 'failure' in eventDict:
             text = eventDict['failure'].getTraceback()
-        elif eventDict.has_key('format'):
+        elif 'format' in eventDict:
             try:
                 text = eventDict['format'] % eventDict
             except:

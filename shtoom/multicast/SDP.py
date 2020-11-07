@@ -212,7 +212,7 @@ class SimpleSDP:
         # XXX quadratic - make rtpmap an ordereddict
         for code, e in map2:
             # Damnit. Handle Cisco CN on PT 19!
-            if d1.has_key(rtpmap2canonical(code,e)):
+            if rtpmap2canonical(code,e) in d1:
                 outmap.append((code,e))
         print(map1, map2, outmap)
         self.rtpmap = outmap

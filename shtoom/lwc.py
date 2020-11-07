@@ -1,4 +1,6 @@
-import sys, inspect, sets
+import sys
+import inspect
+#import sets
 
 
 _nope = object()
@@ -60,7 +62,7 @@ class AdapterRegistry(object):
         cached = self.implementedByCache.get(cls)
         if cached is not None:
             return cached
-        implements = sets.Set()
+        implements = set()
         for cls in inspect.getmro(cls):
             impl = cls.__dict__.get('__implements__')
             if impl is not None:

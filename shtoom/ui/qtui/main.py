@@ -5,12 +5,12 @@ if __name__ == "__main__":
     app=qt.QApplication([])
     qtreactor.install(app)
 
-from shtoommainwindow import ShtoomMainWindow as ShtoomBaseWindow
-from dtmf import DTMF
-from authdialog import ShtoomAuthDialog
-from debugging import Debugging
-from about import AboutDialog
-from about import image0_data as LogoData
+from .shtoommainwindow import ShtoomMainWindow as ShtoomBaseWindow
+from .dtmf import DTMF
+from .authdialog import ShtoomAuthDialog
+from .debugging import Debugging
+from .about import AboutDialog
+from .about import image0_data as LogoData
 
 from shtoom.ui.base import ShtoomBaseUI
 
@@ -234,7 +234,7 @@ class ShtoomMainWindow(ShtoomBaseWindow, ShtoomBaseUI):
         return l
 
     def editPreferences(self):
-        from prefs import PreferencesDialog
+        from .prefs import PreferencesDialog
         self.prefs =PreferencesDialog(self, self.app.getOptions())
         self.prefs.show()
 

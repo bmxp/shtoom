@@ -4,8 +4,8 @@
 #
 
 import socket
-if socket.__dict__.has_key("IP_ADD_MEMBERSHIP"):
-    from unixspec import joinGroup,leaveGroup
+if "IP_ADD_MEMBERSHIP" in socket.__dict__:
+    from .unixspec import joinGroup,leaveGroup
 else:
     raise ImportError("Don't know how to support multicast on this system")
 

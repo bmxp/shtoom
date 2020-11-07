@@ -24,8 +24,8 @@
 from twisted.internet.protocol import DatagramProtocol
 from twisted.python import log
 
-import socket, random, urlparse
-from nonsuckhttp import urlopen
+import socket, random, urllib.parse
+from .nonsuckhttp import urlopen
 from shtoom.soapsucks import BeautifulSoap, SOAPRequestFactory, soapenurl
 from shtoom.defcache import DeferredCache
 
@@ -41,14 +41,16 @@ DEBUG = False
 class UPnPError(Exception): pass
 class NoUPnPFound(UPnPError): pass
 
-def cannedUPnPSearch():
-    return """M-SEARCH * HTTP/1.1\r
+upnp_discovery = """M-SEARCH * HTTP/1.1\r
 Host:%s:%s\r
 ST:urn:schemas-upnp-org:device:InternetGatewayDevice:1\r
 Man:"ssdp:discover"\r
 MX:3\r
 \r
-"""%(UPNP_MCAST, UPNP_PORT)
+"""
+
+def cannedUPnPSearch():
+    return upnp_discovery.format(UPNP_MCAST, UPNP_PORT).encode()
 
 class UPnPProtocol(DatagramProtocol, object):
 
@@ -103,7 +105,7 @@ class UPnPProtocol(DatagramProtocol, object):
         return hdict, body
 
     def discoverUPnP(self):
-        "Discover UPnP devices. Returns a Deferred"
+        """Discover UPnP devices. Returns a Deferred"""
         from twisted.internet import reactor, defer
         self._discDef = defer.Deferred()
         search = cannedUPnPSearch()
@@ -238,9 +240,9 @@ class UPnPProtocol(DatagramProtocol, object):
                 print("dump of response", bs)
             return
 
-        self.controlURL = urlparse.urljoin(self.urlbase, controlurl)
+        self.controlURL = urllib.parse.urljoin(self.urlbase, controlurl)
         log.msg("upnp %r controlURL is %s"%(self, self.controlURL), system='UPnP')
-        d = urlopen(urlparse.urljoin(self.urlbase, scpdurl))
+        d = urlopen(urllib.parse.urljoin(self.urlbase, scpdurl))
         d.addCallback(self.handleWanServiceDesc).addErrback(log.err)
 
     def handleWanServiceDesc(self, body):
@@ -300,7 +302,7 @@ class UPnPProtocol(DatagramProtocol, object):
 
     def addPortMapping(self, intport, extport, desc, proto='UDP', lease=0):
         "add a port mapping. returns a deferred"
-        from nat import getLocalIPAddress
+        from .nat import getLocalIPAddress
         from twisted.internet import defer
         cd = defer.Deferred()
         d = getLocalIPAddress()

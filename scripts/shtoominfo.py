@@ -79,6 +79,8 @@ if __name__ == "__main__":
     from twisted.internet import reactor
     import sys
     from shtoom import log
+    print("Starting",__name__)
+    print("="*40)
     if len(sys.argv) > 1 and sys.argv[1] == "-v":
         import shtoom.stun
         shtoom.stun.STUNVERBOSE = True

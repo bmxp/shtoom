@@ -1,7 +1,10 @@
 # Copyright (C) 2004 Anthony Baxter
 "This module contains the logic and classes for format negotiation"
 
-from twisted.python.util import OrderedDict
+#deprecated in twisted 15.5.0
+#from twisted.python.util import OrderedDict
+from collections import OrderedDict
+
 from shtoom.avail import codecs
 
 
@@ -115,7 +118,7 @@ class SDPGenerator:
 
 RTPDict = {}
 all = globals()
-for key,val in all.items():
+for key, val in list(all.items()):
     if isinstance(val, PTMarker):
         # By name
         RTPDict[key] = val

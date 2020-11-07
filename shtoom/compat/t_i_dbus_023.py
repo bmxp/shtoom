@@ -90,7 +90,7 @@ class Bus(dbus.Bus):
         d.addCallback(lambda x, a=args: self._cb_signal_func(x, a))
 
     def _cb_signal_func(self, match_rule, args):
-        if (self._match_rule_to_receivers.has_key(match_rule)):
+        if (match_rule in self._match_rule_to_receivers):
             receivers = self._match_rule_to_receivers[match_rule]
             for receiver in receivers:
                 receiver(*args)
@@ -155,7 +155,7 @@ class ProxyMethod(dbus.RemoteMethod):
         if not isinstance(reactor, gtk2reactor.Gtk2Reactor):
             raise RuntimeError("dbus only works with Gtk2Reactor, not %r"%(reactor))
         dbus_interface = self._interface
-        if (keywords.has_key('dbus_interface')):
+        if ('dbus_interface' in keywords):
             dbus_interface = keywords['dbus_interface']
 
         message = dbus_bindings.MethodCall(self._object_path, dbus_interface,

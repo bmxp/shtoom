@@ -1,11 +1,11 @@
 
-from Tkinter import *
+from tkinter import *
 from twisted.python import log
 
 from shtoom.ui.base import ShtoomBaseUI
 from shtoom.exceptions import CallRejected
 
-from addressedit import AddressBook
+from .addressedit import AddressBook
 
 #class AuthDialog(Dialog):
 #
@@ -196,7 +196,7 @@ class ShtoomMainWindow(ShtoomBaseUI):
         self.main.quit()
 
     def getAuth(self, method, realm):
-        from popups import AuthDialog
+        from .popups import AuthDialog
         from twisted.internet import defer
 
         d = defer.Deferred()
@@ -207,7 +207,7 @@ class ShtoomMainWindow(ShtoomBaseUI):
         return self.popupIncoming(description, cookie)
 
     def popupIncoming(self, description, cookie):
-        import popups
+        from . import popups
         from twisted.internet import defer
         d = defer.Deferred()
         popup = popups.Dialog(self.main, d,
@@ -228,7 +228,7 @@ class ShtoomMainWindow(ShtoomBaseUI):
         dlg = AddressBook(self.main,self)
 
     def prefmenuitem_selected(self):
-        from prefs import PreferencesDialog
+        from .prefs import PreferencesDialog
         self._p = PreferencesDialog(self.main, self, self.app.getOptions())
 
     def updateOptions(self, od):
